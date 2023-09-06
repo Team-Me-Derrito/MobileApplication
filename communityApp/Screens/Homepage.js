@@ -3,7 +3,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import BlackButton from "./Components/BlackButton";
 
 function test() {
-    console.log('test');
+    console.log('Button Pressed!');
 }
 export default function Homepage() {
     return (
