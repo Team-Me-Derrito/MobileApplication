@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import Eventpage from './Screens/Eventpage';
 
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.showContainer}> 
       <Eventpage />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -18,4 +18,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  showContainer: {
+    backgroundColor: 'yellow',
+    flex: 1,
+  }
 });
