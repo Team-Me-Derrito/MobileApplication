@@ -3,6 +3,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import Homepage from './Screens/Homepage';
 import Profile from './Screens/Profile';
 import Header from './Screens/Header';
+import Eventpage from './Screens/Eventpage';
+
 
 export default function App() {
   return (
