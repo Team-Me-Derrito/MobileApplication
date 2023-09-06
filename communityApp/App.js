@@ -1,13 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import Homepage from './Screens/Homepage';
-import Header from './Screens/Header';
+import Eventpage from './Screens/Eventpage';
+
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Header />
-      <Homepage />
+      <Eventpage />
     </View>
   );
 }
