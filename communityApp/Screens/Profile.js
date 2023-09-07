@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, ScrollView, Image, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, Pressable, ScrollView, Image, TouchableOpacity, SafeAreaView} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import BlackButton from "./Components/BlackButton";
 
@@ -6,100 +6,60 @@ function test() {
     console.log('test');
 }
 
-/*
 export default function Profile() {
-    return (
-        <View style={styles.container}>
-            <ScrollView width='100%'> 
-            <BlackButton onPress={() => test()} text="Edit" borderRadius={2} />
-            <BlackButton onPress={() => test()} text="Save" borderRadius={2} />
-            </ScrollView>
-        </View>
-    );
-}
-*/
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.profileContainer}>
+        <Image
+          source={{ uri: 'image.jpg' }}
+          style={styles.profileImage}
+        />
+        <Text style={styles.name}>John Smith</Text>
+        <Text style={styles.bio}>Developer</Text>
+        <Text style={styles.detail}>Birthday: January 16, 2002</Text>
+        <Text style={styles.detail}>Location: Indooroopilly, Qld</Text>
+        <Text style={styles.detail}>Likes: Jogging, Hiking, Sports</Text>
 
-export default function Profile() {
-    return (
-        <View style={styles.container}>
-          <Image
-            source={{ uri: 'https://example.com/your-profile-image.jpg' }} // Replace with the URL of the user's profile image
-            style={styles.profileImage}
-          />
-          <Text style={styles.name}>John Doe</Text>
-          <Text style={styles.bio}>Frontend Developer</Text>
-          <Text style={styles.detail}>Birthday: January 15, 1990</Text>
-          <Text style={styles.detail}>Location: New York, USA</Text>
-          <Text style={styles.detail}>Likes: React Native, JavaScript, Hiking</Text>
-    
-          {/* Action buttons */}
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={() => console.log('Edit Profile')}>
-              <Text>Edit Profile</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => console.log('Logout')}>
-              <Text>Logout</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.buttonContainer}>
+          <BlackButton onPress={() => test()} text="Edit Profile" borderRadius={2} />
+          <BlackButton onPress={() => test()} text="Logout" borderRadius={2} />
         </View>
-      );
+      </ScrollView>
+    </SafeAreaView>
+  );
 }
   
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    profileImage: {
-      width: 150,
-      height: 150,
-      borderRadius: 75, // To make it a circular image
-      marginBottom: 20,
-    },
-    name: {
-      fontSize: 24,
-      fontWeight: 'bold',
-    },
-    bio: {
-      fontSize: 18,
-      marginBottom: 10,
-    },
-    detail: {
-      fontSize: 16,
-      marginBottom: 10,
-    },
-    buttonContainer: {
-      flexDirection: 'row', // Horizontal layout for buttons
-    },
-    button: {
-      backgroundColor: '#007AFF',
-      paddingVertical: 10,
-      paddingHorizontal: 20,
-      borderRadius: 5,
-      marginHorizontal: 10, // Spacing between buttons
-    },
-  });
-
-  /*
-const styles = StyleSheet.create({
-    container: {
-      width: '100%',
-      height: '85%',
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'black',
-    },
-    row: {
-      flexDirection: "row",
-    },
-    buttonText: {
-      fontSize: 25,
-      color: 'white',
-      fontWeight: 'bold',
-      justifyContent: 'center',
-      alignItems: 'center',
-      
-    },
-  });
-  */
+  container: {
+    flex: 0,
+    height: '80%',
+  },
+  profileContainer: {
+    alignItems: 'center',
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+  },
+  profileImage: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    marginBottom: 20,
+  },
+  name: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  bio: {
+    fontSize: 18,
+    marginBottom: 10,
+  },
+  detail: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    marginTop: 20,
+  },
+});
