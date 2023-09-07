@@ -22,4 +22,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  showContainer: {
+    backgroundColor: 'yellow',
+    flex: 1,
+  }
 });
