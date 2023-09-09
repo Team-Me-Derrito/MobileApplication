@@ -9,13 +9,24 @@ function test() {
 export default function Eventpage() {
     return (
         <View style={styles.showContainer}>
-            <View style={styles.row}>
-                <Header text="Events" />
+            <View>
+                <View style={styles.row}>
+                    <Header text="Events" />
+                </View>
             </View>
-            <View style={styles.row}>
-                <View style={styles.container}>
-                    
-                    <BlackButton onPress={() => test()} text="See Events" borderRadius={2} />
+            <View style={styles.container}>
+                <View >
+                    <View style={styles.container}>
+                        <BlackButton onPress={() => test()} text="See Events" borderRadius={2} />
+                        <BlackButton onPress={() => test()} text="See Events" borderRadius={2} />
+                        <BlackButton onPress={() => test()} text="See Events" borderRadius={2} />
+                        <BlackButton onPress={() => test()} text="See Events" borderRadius={2} />
+                        <BlackButton onPress={() => test()} text="See Events" borderRadius={2} />
+                        <BlackButton onPress={() => test()} text="See Events" borderRadius={2} />
+                        <BlackButton onPress={() => test()} text="See Events" borderRadius={2} />
+                        <BlackButton onPress={() => test()} text="See Events" borderRadius={2} />
+                        
+                    </View>
                 </View>
             </View>
         </View>
@@ -26,7 +37,7 @@ export default function Eventpage() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'green',
+      backgroundColor: 'grey',
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -37,7 +48,7 @@ const styles = StyleSheet.create({
         backgroundColor: "red"
     },
     showContainer: {
-        backgroundColor: "green",
+        backgroundColor: "blue",
         flex: 1
     }
 });
