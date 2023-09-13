@@ -6,7 +6,7 @@ function test() {
     console.log('test');
 }
 
-export default function Profile() {
+export default function Profile({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.profileContainer}>
@@ -21,7 +21,7 @@ export default function Profile() {
         <Text style={styles.detail}>Likes: Jogging, Hiking, Sports</Text>
 
         <View style={styles.buttonContainer}>
-          <BlackButton onPress={() => test()} text="Edit Profile" borderRadius={2} />
+          <BlackButton onPress={() => navigation.navigate('Homepage')} text="Edit Profile" borderRadius={2} />
           <BlackButton onPress={() => test()} text="Logout" borderRadius={2} />
         </View>
       </ScrollView>
@@ -63,3 +63,4 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
+

@@ -1,23 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import Homepage from './Screens/Homepage';
 import Profile from './Screens/Profile';
-import Header from './Screens/Components/Header';
-import Eventpage from './Screens/Eventpage';
 
+const Stack = createStackNavigator();
 
-export default function App() {
+export default function App (){
   return (
-    <SafeAreaView style={styles.container}>
-      <Homepage />
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Profile">
+        <Stack.Screen name="Homepage" component={Homepage} options={{ headerShown: false }}/>
+        <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'orange',
-    
-  },
-});
