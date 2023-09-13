@@ -11,7 +11,7 @@ import LoginScreen from './Screens/Login';
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <Eventpage />
+      <SignupScreen />
     </SafeAreaView>
   );
 }
