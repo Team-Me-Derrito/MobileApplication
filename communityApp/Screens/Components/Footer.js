@@ -2,25 +2,24 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Footer() {
     console.log("showing header");
-    
+    const navigation = useNavigation();
     return (
         <View style={styles.headerContainer}>
             <View>
-                <Ionicons name="home" size={32} color="black" />
-
+                <Ionicons name="home" size={32} color="black" onPress={() => navigation.navigate('Homepage')}/>
             </View>
             <View >
                 <Ionicons name="search" size={32} color="black" />
-
             </View>
             <View >
                 <SimpleLineIcons name="event" size={24} color="black" />
             </View>
             <View>
-                <SimpleLineIcons name="user" size={24} color="black" />
+                <SimpleLineIcons name="user" size={24} color="black" onPress={() => navigation.navigate('Profile')}/>
             </View>
         </View>
     );

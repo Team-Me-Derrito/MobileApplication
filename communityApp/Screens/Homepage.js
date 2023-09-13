@@ -7,7 +7,7 @@ import Header from './Components/Header';
 import Footer from './Components/Footer';
 import EventBox from './Components/EventBox';
 
-export default function Homepage() {
+export default function Homepage({ navigation }) {
     
     return (
         <View style={styles.showContainer}>
