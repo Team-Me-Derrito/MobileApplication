@@ -6,13 +6,13 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 export default function EventBox({
     onPress,
     text,
-    imagePath=require("../../assets/Event_images/football.jpeg"),
+    imagePath="../../assets/Event_images/football.jpeg",
     borderRadius = 5,
     opacity = 1,
 }) {
 
     let {width, height} = Dimensions.get("window");
-    const image = require("../../assets/Event_Images/football.jpeg");
+    //const image = require("../../assets/Event_Images/football.jpeg");
     return (
         
         <Pressable style={({ pressed }) => [
@@ -31,7 +31,7 @@ export default function EventBox({
             ]} >
             
             <Text style={{color: "black", fontWeight: "bold"}} >{text}</Text>
-            <Image src={image} />
+
         </Pressable>
     );
 }
