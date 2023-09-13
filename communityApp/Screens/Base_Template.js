@@ -5,10 +5,9 @@ import BlackButton from "./Components/BlackButton";
 import NiceToggle from "./Components/NiceToggle";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
-import EventBox from './Components/EventBox';
 
-export default function Homepage({ navigation }) {
-    
+export default function Base_Template() {
+    //Code goes here
     return (
         <View style={styles.showContainer}>
             <View>
@@ -19,7 +18,6 @@ export default function Homepage({ navigation }) {
             </View>
             <View style={styles.container}>
                 <View>
-                    <EventBox />
                     <Text>You're content goes in here</Text>
                 </View>
             </View>

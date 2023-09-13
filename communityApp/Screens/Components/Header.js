@@ -1,26 +1,22 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Footer() {
+export default function Header({ text }) {
     console.log("showing header");
-    
+    const navigation = useNavigation();
     return (
         <View style={styles.headerContainer}>
-            <View>
-                <Ionicons name="home" size={32} color="black" />
-
+            <View style={styles.leftIcon}>
+                <Ionicons 
+                    name="arrow-back" size={32} color="black" 
+                    onPress={() => navigation.goBack()}
+                />
             </View>
-            <View >
-                <Ionicons name="search" size={32} color="black" />
-
-            </View>
-            <View >
-                <SimpleLineIcons name="event" size={24} color="black" />
-            </View>
-            <View>
-                <SimpleLineIcons name="user" size={24} color="black" />
+            <View style={styles.rightIcon}>
+                <SimpleLineIcons name="options-vertical" size={24} color="black" />
             </View>
         </View>
     );
