@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import BlackButton from "./Components/BlackButton";
 import NiceToggle from "./Components/NiceToggle";
-import Header from './Header';
-import Footer from './Footer';
+import Header from './Components/Header';
+import Footer from './Components/Footer';
 
 function test() {
     console.log('Button Pressed!');
