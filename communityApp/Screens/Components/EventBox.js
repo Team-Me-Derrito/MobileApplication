@@ -31,7 +31,6 @@ export default function EventBox({
             ]} >
             
             <Text style={{color: "black", fontWeight: "bold"}} >{text}</Text>
-
         </Pressable>
     );
 }
