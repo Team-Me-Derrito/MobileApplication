@@ -14,8 +14,6 @@ export default function Header({ text }) {
                     name="arrow-back" size={32} color="black" 
                     onPress={() => navigation.goBack()}
                 />
-            </View>
-            <View style={styles.headerTextView}>
                 <Text style={styles.headerText}>{text}</Text>
             </View>
             <View style={styles.rightIcon}>
@@ -39,24 +37,13 @@ const styles = StyleSheet.create({
     leftIcon: {
         flexDirection: 'row', // Arrange icon and text in a row
         alignItems: 'center', // Vertically align icon and text
-        width: '30%',
-        flex: 1,
     },
     rightIcon: {
-        position: 'right',
+        position: 'absolute',
         right: 10, // Adjust this value to position the icon as desired
-        width: '30%',
-        flex: 1,
     },
     headerText: {
         fontSize: 16,
         marginLeft: 5, // Add some space between the icon and text
-        alignItems: 'center',
-    },
-    headerTextView: {
-        flexDirection: 'row',
-        width: '30%',
-        flex: 3,
-        alignItems: 'center',
     },
 });
