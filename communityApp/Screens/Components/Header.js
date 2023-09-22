@@ -15,6 +15,9 @@ export default function Header({ text }) {
                     onPress={() => navigation.goBack()}
                 />
             </View>
+            <View style={styles.headerTextView}>
+                <Text style={styles.headerText}>{text}</Text>
+            </View>
             <View style={styles.rightIcon}>
                 <SimpleLineIcons name="options-vertical" size={24} color="black" />
             </View>
@@ -36,13 +39,24 @@ const styles = StyleSheet.create({
     leftIcon: {
         flexDirection: 'row', // Arrange icon and text in a row
         alignItems: 'center', // Vertically align icon and text
+        width: '30%',
+        flex: 1,
     },
     rightIcon: {
-        position: 'absolute',
+        position: 'right',
         right: 10, // Adjust this value to position the icon as desired
+        width: '30%',
+        flex: 1,
     },
     headerText: {
         fontSize: 16,
         marginLeft: 5, // Add some space between the icon and text
+        alignItems: 'center',
+    },
+    headerTextView: {
+        flexDirection: 'row',
+        width: '30%',
+        flex: 3,
+        alignItems: 'center',
     },
 });
