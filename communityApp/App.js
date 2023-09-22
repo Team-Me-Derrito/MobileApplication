@@ -14,7 +14,7 @@ export default function App (){
   return (
     <NavigationContainer>
       <SafeAreaView style={styles.container}>
-      <Stack.Navigator initialRouteName="Profile">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Homepage" component={Homepage} options={{ headerShown: false }}/>
         <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>

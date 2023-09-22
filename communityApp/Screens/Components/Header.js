@@ -14,6 +14,7 @@ export default function Header({ text }) {
                     name="arrow-back" size={32} color="black" 
                     onPress={() => navigation.goBack()}
                 />
+                <Text style={styles.headerText}>{text}</Text>
             </View>
             <View style={styles.rightIcon}>
                 <SimpleLineIcons name="options-vertical" size={24} color="black" />
