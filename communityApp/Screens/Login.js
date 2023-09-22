@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import BlackButton from "./Components/BlackButton";
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -9,6 +10,7 @@ const LoginScreen = () => {
     //Login logic to be updated
     console.log('Email:', email);
     console.log('Password:', password);
+    navigation.navigate('Homepage');
   };
 
   return (
@@ -27,9 +29,8 @@ const LoginScreen = () => {
         onChangeText={text => setPassword(text)}
         value={password}
       />
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
+      <BlackButton onPress={handleLogin} text="Login" borderRadius={2} />
+      <BlackButton onPress={() => navigation.navigate('Signup')} text="Sign Up" borderRadius={2} />
     </View>
   );
 };
