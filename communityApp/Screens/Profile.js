@@ -23,7 +23,7 @@ export default function Profile({ navigation }) {
     <View style={styles.showContainer}>
       <View>
         <View style={styles.row}>
-          <Header text="Events" />
+          <Header text="Eves" />
         </View>   
       </View>
 
