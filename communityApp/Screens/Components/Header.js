@@ -9,16 +9,16 @@ export default function Header({ text }) {
     const navigation = useNavigation();
     return (
         <View style={styles.headerContainer}>
-            <View style={styles.leftIcon}>
+            <View style={styles.leftChildContainer}>
                 <Ionicons 
                     name="arrow-back" size={32} color="black" 
                     onPress={() => navigation.goBack()}
                 />
             </View>
-            <View style={styles.headerTextContainer}>
+            <View style={styles.middleChildContainer}>
                 <Text style={styles.headerText}>{text}</Text>
             </View>
-            <View style={styles.rightIcon}>
+            <View style={styles.rightChildContainer}>
                 <SimpleLineIcons name="options-vertical" size={24} color="black" />
             </View>
         </View>
@@ -27,32 +27,33 @@ export default function Header({ text }) {
 
 const styles = StyleSheet.create({
     headerContainer: {
-        flexDirection: 'row',
-        flex: 2,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: 'yellow',
-        paddingHorizontal: 10,
-        paddingTop: 10,
-        zIndex: 100,
-    },
-    leftIcon: {
-        flexDirection: 'row', // Arrange icon and text in a row
-        alignItems: 'left', // Vertically align icon and text
+        flexDirection: 'row', // Arrange children horizontally
+        justifyContent: 'space-between', // Distribute space evenly between children
+        paddingHorizontal: 16, // Optional: Add horizontal padding
+        alignItems: 'center', // Align children vertically in the center
+        height: 50, // Set a fixed height for the row container
         flex: 1,
-    },
-    rightIcon: {
-        alignItems: 'right',
-        position: 'absolute',
-        right: 5, // Adjust this value to position the icon as desired
-        flex: 1,
-    },
-    headerTextContainer: {
-        alignItems: 'left',
-        flex: 1,
-        right: 35,
     },
     headerText: {
         fontSize: 24,
-    }
+    },
+    leftChildContainer: {
+        width: '30%', // Adjust as needed for your desired spacing
+        height: '100%', // Optional: Make child containers the same height
+        backgroundColor: 'lightgray', // Optional: Add background color
+    },
+    middleChildContainer: {
+        width: '30%', // Adjust as needed for your desired spacing
+        height: '100%', // Optional: Make child containers the same height
+        backgroundColor: 'lightgray', // Optional: Add background color
+        alignItems: 'center',
+    },
+    rightChildContainer: {
+        width: '30%', // Adjust as needed for your desired spacing
+        height: '60%', // Optional: Make child containers the same height
+        backgroundColor: 'lightgray', // Optional: Add background color
+        alignItems: 'right',
+        justifyContent: 'flex-end', 
+        flexDirection: 'row',
+    },
 });
