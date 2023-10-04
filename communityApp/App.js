@@ -1,16 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { SafeAreaView, StyleSheet} from 'react-native';
 import Homepage from './Screens/Homepage';
 import Profile from './Screens/Profile';
-import Header from './Screens/Components/Header';
+import Login from './Screens/Login';
+import Signup from './Screens/Signup';
 import Eventpage from './Screens/Eventpage';
+import EditProfile from './Screens/EditProfile';
+import EventCreation from './Screens/EventCreation';
 
 
-export default function App() {
+const Stack = createStackNavigator();
+
+export default function App (){
   return (
-    <SafeAreaView style={styles.container}>
-      <Homepage />
-    </SafeAreaView>
+    <NavigationContainer>
+      <SafeAreaView style={styles.container}>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Homepage" component={Homepage} options={{ headerShown: false }}/>
+        <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
+        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
+        <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }}/>
+        <Stack.Screen name="Eventpage" component={Eventpage} options={{ headerShown: false }}/>
+        <Stack.Screen name="EditProfile" component={EditProfile} options={{ headerShown: false }}/>
+        <Stack.Screen name="EventCreation" component={EventCreation} options={{ headerShown: false }}/>
+      </Stack.Navigator>
+      </SafeAreaView>
+    </NavigationContainer>
+
   );
 }
 

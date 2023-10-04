@@ -1,18 +1,27 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Header({ text }) {
     console.log("showing header");
+    const navigation = useNavigation();
     return (
         <View style={styles.headerContainer}>
-            <View style={styles.leftIcon}>
-                <Ionicons name="arrow-back" size={32} color="black" />
+            <View style={styles.leftChildContainer}>
+                <Ionicons 
+                    name="arrow-back" size={32} color="black" 
+                    onPress={() => navigation.goBack()}
+                />
+            </View>
+            <View style={styles.middleChildContainer}>
                 <Text style={styles.headerText}>{text}</Text>
             </View>
-            <View style={styles.rightIcon}>
-                <SimpleLineIcons name="options-vertical" size={24} color="black" />
+            <View style={styles.rightChildContainer}>
+                <SimpleLineIcons name="options-vertical" size={24} color="black" 
+                    onPress={() => navigation.navigate("EventCreation")}
+                />
             </View>
         </View>
     );
@@ -20,25 +29,33 @@ export default function Header({ text }) {
 
 const styles = StyleSheet.create({
     headerContainer: {
-        flexDirection: 'row',
+        flexDirection: 'row', // Arrange children horizontally
+        justifyContent: 'space-between', // Distribute space evenly between children
+        paddingHorizontal: 16, // Optional: Add horizontal padding
+        alignItems: 'center', // Align children vertically in the center
+        height: 50, // Set a fixed height for the row container
         flex: 1,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: 'yellow',
-        paddingHorizontal: 10,
-        paddingTop: 10,
-        zIndex: 100,
-    },
-    leftIcon: {
-        flexDirection: 'row', // Arrange icon and text in a row
-        alignItems: 'center', // Vertically align icon and text
-    },
-    rightIcon: {
-        position: 'absolute',
-        right: 10, // Adjust this value to position the icon as desired
     },
     headerText: {
-        fontSize: 16,
-        marginLeft: 5, // Add some space between the icon and text
+        fontSize: 24,
+    },
+    leftChildContainer: {
+        width: '30%', // Adjust as needed for your desired spacing
+        height: '100%', // Optional: Make child containers the same height
+        backgroundColor: 'lightgray', // Optional: Add background color
+    },
+    middleChildContainer: {
+        width: '30%', // Adjust as needed for your desired spacing
+        height: '100%', // Optional: Make child containers the same height
+        backgroundColor: 'lightgray', // Optional: Add background color
+        alignItems: 'center',
+    },
+    rightChildContainer: {
+        width: '30%', // Adjust as needed for your desired spacing
+        height: '60%', // Optional: Make child containers the same height
+        backgroundColor: 'lightgray', // Optional: Add background color
+        alignItems: 'right',
+        justifyContent: 'flex-end', 
+        flexDirection: 'row',
     },
 });

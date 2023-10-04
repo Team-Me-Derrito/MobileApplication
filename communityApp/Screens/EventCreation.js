@@ -3,23 +3,18 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button} from 'reac
 import BlackButton from "./Components/BlackButton";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
-import DatePicker from 'react-native-date-picker'
 
-const SignupScreen = ({navigation}) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-  const [likes, setLikes] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [date, setDate] = useState(new Date())
-  const [open, setOpen] = useState(false)
+const EventCreationScreen = ({navigation}) => {
+  const [title, setTitle] = useState('');
+  const [description, setDesc] = useState('');
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+  const [tags, setTags] = useState('');
 
-  const handleSignup = () => {
+  const handleEventCreation = () => {
     //Sign up logic to be updated
-    console.log('Email:', email);
-    console.log('Password:', password);
-    navigation.navigate('Login');
+    console.log('title:', title);
+    navigation.navigate('Homepage');
   };
 
   return (
@@ -27,64 +22,50 @@ const SignupScreen = ({navigation}) => {
     <View style={styles.showContainer}>
     <View>
         <View style={styles.row}>
+          <Header text="Events" />
         </View>
         
     </View>
       <View style={styles.container}>
         <View>
           <View style={styles.container}>
-            <Text style={styles.title}>Signup</Text>
+            <Text style={styles.title}>Event</Text>
             <TextInput
               style={styles.input}
-              placeholder="Name"
-              onChangeText={text => setName(text)}
-              value={name}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Birthday DD/MM/YYY"
-              onChangeText={text => setBirthday(text)}
-              value={birthday}
-              mode="date"
+              placeholder="Title"
+              onChangeText={text => setTitle(text)}
+              value={title}
             />
             <TextInput
               style={styles.inputLikes}
-              placeholder="Likes"
-              onChangeText={text => setLikes(text)}
-              value={likes}
+              placeholder="Description"
+              onChangeText={text => setDesc(text)}
+              value={description}
             />
             <TextInput
               style={styles.input}
-              placeholder="Phone Number"
-              onChangeText={text => setNumber(text)}
-              keyboardType="numeric"
-              value={number}
+              placeholder="Date DD/MM/YYYY"
+              onChangeText={text => setDate(text)}
+              value={date}
             />
             <TextInput
               style={styles.input}
-              placeholder="Email"
-              onChangeText={text => setEmail(text)}
-              value={email}
+              placeholder="Time"
+              onChangeText={text => setTime(text)}
+              value={time}
             />
             <TextInput
               style={styles.input}
-              placeholder="Password"
-              secureTextEntry
-              onChangeText={text => setPassword(text)}
-              value={password}
+              placeholder="Tags"
+              onChangeText={text => setTags(text)}
+              value={tags}
             />
-            <TextInput
-              style={styles.input}
-              placeholder="Confirm Password"
-              secureTextEntry
-              onChangeText={text => setPassword(text)}
-              value={password}
-            />
-            <BlackButton onPress={handleSignup} text="Save" borderRadius={2} />
+            <BlackButton onPress={handleEventCreation} text="Create" borderRadius={2} />
         </View>
       </View>
     </View>
     <View style={styles.row}>
+      <Footer />
     </View>
 </View>
   );
@@ -145,4 +126,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignupScreen;
+export default EventCreationScreen;
