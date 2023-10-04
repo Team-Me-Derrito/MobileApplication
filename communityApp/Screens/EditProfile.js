@@ -5,7 +5,7 @@ import Header from './Components/Header';
 import Footer from './Components/Footer';
 import DatePicker from 'react-native-date-picker'
 
-const SignupScreen = ({navigation}) => {
+const EditProfileScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -15,11 +15,11 @@ const SignupScreen = ({navigation}) => {
   const [date, setDate] = useState(new Date())
   const [open, setOpen] = useState(false)
 
-  const handleSignup = () => {
+  const handleEdit = () => {
     //Sign up logic to be updated
     console.log('Email:', email);
     console.log('Password:', password);
-    navigation.navigate('Login');
+    navigation.navigate('Profile');
   };
 
   return (
@@ -27,6 +27,7 @@ const SignupScreen = ({navigation}) => {
     <View style={styles.showContainer}>
     <View>
         <View style={styles.row}>
+          <Header text="Events" />
         </View>
         
     </View>
@@ -80,11 +81,12 @@ const SignupScreen = ({navigation}) => {
               onChangeText={text => setPassword(text)}
               value={password}
             />
-            <BlackButton onPress={handleSignup} text="Save" borderRadius={2} />
+            <BlackButton onPress={handleEdit} text="Save" borderRadius={2} />
         </View>
       </View>
     </View>
     <View style={styles.row}>
+      <Footer />
     </View>
 </View>
   );
@@ -145,4 +147,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignupScreen;
+export default EditProfileScreen;

@@ -19,7 +19,9 @@ export default function Header({ text }) {
                 <Text style={styles.headerText}>{text}</Text>
             </View>
             <View style={styles.rightChildContainer}>
-                <SimpleLineIcons name="options-vertical" size={24} color="black" />
+                <SimpleLineIcons name="options-vertical" size={24} color="black" 
+                    onPress={() => navigation.navigate("EventCreation")}
+                />
             </View>
         </View>
     );

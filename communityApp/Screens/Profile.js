@@ -52,7 +52,7 @@ export default function Profile({ navigation }) {
             <Text style={styles.detail}>Location: {location}</Text>
             <Text style={styles.detail}>Likes: {likes}</Text>
             <View style={styles.buttonContainer}>
-              <BlackButton onPress={() => navigation.navigate('Homepage')} text="Edit Profile" borderRadius={2} />
+              <BlackButton onPress={() => navigation.navigate('EditProfile')} text="Edit Profile" borderRadius={2} />
               <BlackButton onPress={() => navigation.navigate('Login')} text="Logout" borderRadius={2} />
             </View>
           </ScrollView>

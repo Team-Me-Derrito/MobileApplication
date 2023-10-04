@@ -7,6 +7,9 @@ import Profile from './Screens/Profile';
 import Login from './Screens/Login';
 import Signup from './Screens/Signup';
 import Eventpage from './Screens/Eventpage';
+import EditProfile from './Screens/EditProfile';
+import EventCreation from './Screens/EventCreation';
+
 
 const Stack = createStackNavigator();
 
@@ -20,6 +23,8 @@ export default function App (){
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
         <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }}/>
         <Stack.Screen name="Eventpage" component={Eventpage} options={{ headerShown: false }}/>
+        <Stack.Screen name="EditProfile" component={EditProfile} options={{ headerShown: false }}/>
+        <Stack.Screen name="EventCreation" component={EventCreation} options={{ headerShown: false }}/>
       </Stack.Navigator>
       </SafeAreaView>
     </NavigationContainer>
