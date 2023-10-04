@@ -1,121 +1,56 @@
+import { BASE_URL, API_KEY, OPTION, ACCOUNT_ID, TOKEN, RECOMMENDED, UPCOMING, SEARCH, ALL, COMMUNITY, QUERY } from '../constants/Database.js';
+import { postRequest } from './BaseRequest.js';
+
+
+const endpoint = 'events';
 
 export async function getRecommended(token, id) {
-    try {
-        const url = `http://127.0.0.1/api/recommendedevents`;
-        const message = {
-            token: token,
-            account_id: id
-        };
-        const method = "POST";
-        const response = await fetch(url, {
-            method: method,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(message)
-        });
-        const json = await response.json();
-        return json;
-    } catch (err) {
-        console.log(err);
-        return null;
-    }
+    const message = {
+        [TOKEN]: token,
+        [ACCOUNT_ID]: id,
+        [OPTION]: RECOMMENDED
+    };
+
+    await postRequest(endpoint, message);
 }
 
 export async function getAllEvents(token, id) {
-    try {
-        const url = `http://127.0.0.1/api/allevents`;
-        const message = {
-            token: token,
-            account_id: id
-        };
-        const method = "POST";
-        const response = await fetch(url, {
-            method: method,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(message)
-        });
-        const json = await response.json();
-        return json;
-    } catch (err) {
-        console.log(err);
-        return null;
-    }
+    const message = {
+        [TOKEN]: token,
+        [ACCOUNT_ID]: id,
+        [OPTION]: ALL
+    };
+
+    await postRequest(endpoint, message);
 }
 
 export async function getUpcoming(token, id) {
-    try {
-        const url = `http://127.0.0.1/api/upcomingevents`;
-        const message = {
-            token: token,
-            account_id: id
-        };
-        const method = "POST";
-        const response = await fetch(url, {
-            method: method,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(message)
-        });
-        const json = await response.json();
-        return json;
-    } catch (err) {
-        console.log(err);
-        return null;
-    }
+    const message = {
+        [TOKEN]: token,
+        [ACCOUNT_ID]: id,
+        [OPTION]: UPCOMING
+    };
+
+    await postRequest(endpoint, message);
 }
 
 export async function searchEvents(id, token, search) {
-    try {
-        const url = `http://127.0.0.1/api/searchevents`;
-        const message = {
-            token: token,
-            account_id: id,
-            query: search
-        };
-        const method = "POST";
-        const response = await fetch(url, {
-            method: method,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(message)
-        });
-        const json = await response.json();
-        return json;
-    } catch (err) {
-        console.log(err);
-        return null;
-    }
+    const message = {
+        [TOKEN]: token,
+        [ACCOUNT_ID]: id,
+        [OPTION]: SEARCH,
+        [QUERY]: search
+    };
+
+    await postRequest(endpoint, message);
 }
 
 export async function getCommunityEvents(token, id) {
-    try {
-        const url = `http://127.0.0.1/api/communityevents`;
-        const message = {
-            token: token,
-            account_id: id
-        };
-        const method = "POST";
-        const response = await fetch(url, {
-            method: method,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(message)
-        });
-        const json = await response.json();
-        return json;
-    } catch (err) {
-        console.log(err);
-        return null;
-    }
+    const message = {
+        [TOKEN]: token,
+        [ACCOUNT_ID]: id,
+        [OPTION]: COMMUNITY
+    };
+
+    await postRequest(endpoint, message);
 }

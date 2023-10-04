@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button} from 'reac
 import BlackButton from "./Components/BlackButton";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
-import DatePicker from 'react-native-date-picker'
+import DatePicker from 'react-native-date-picker';
 
 const SignupScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -31,7 +31,7 @@ const SignupScreen = ({navigation}) => {
       [NAME]: null,
       [AGE]: null,
       [GENDER]: null,
-      [PHONE_NUMBER]: null,
+      [PHONE]: null,
       [EMAIL]: email,
       [PASSWORD]: password,
       [SALT]: null
