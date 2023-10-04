@@ -7,8 +7,6 @@ import Profile from './Screens/Profile';
 import Login from './Screens/Login';
 import Signup from './Screens/Signup';
 import Eventpage from './Screens/Eventpage';
-import SignupScreen from './Screens/Signup';
-import LoginScreen from './Screens/Login';
 import EditProfile from './Screens/EditProfile';
 import EventCreation from './Screens/EventCreation';
 

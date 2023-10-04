@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button} from 'reac
 import BlackButton from "./Components/BlackButton";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
-import DatePicker from 'react-native-date-picker';
+import DatePicker from 'react-native-date-picker'
 
 const SignupScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -16,51 +16,11 @@ const SignupScreen = ({navigation}) => {
   const [open, setOpen] = useState(false)
 
   const handleSignup = () => {
-    //Validation step to be implemented
-
+    //Sign up logic to be updated
     console.log('Email:', email);
     console.log('Password:', password);
     navigation.navigate('Login');
   };
-
-  async function createAccount() {
-    const url = BASE_URL;
-
-    const data = {
-      [COMMUNITY_ID]: null, //Replace those null values with actual variables
-      [NAME]: null,
-      [AGE]: null,
-      [GENDER]: null,
-      [PHONE]: null,
-      [EMAIL]: email,
-      [PASSWORD]: password,
-      [SALT]: null
-    };
-
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
-    const json = await response.json();
-    return json;
-
-  }
-
-  const redirectLogin = () => {
-    console.log('Redirect');
-  }
-
-  const verifyPassword = (text) => {
-    if (text === password) {
-      console.log('Password is correct');
-    } else {
-      console.log('Password is not correct');
-    }
-  }
 
   return (
     
@@ -153,31 +113,17 @@ const styles = StyleSheet.create({
       backgroundColor: "blue",
       flex: 1
   },
-  textContainer: {
-    alignSelf: 'stretch',
-  },
   title: {
     fontSize: 24,
     marginBottom: 20,
-    textAlign: 'left',
   },
-  label: {
-    fontSize: 16,
-    marginBottom: 5,
-    textAlign: 'left',
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: 320,
+  input: {
+    width: 300,
     height: 40,
+    padding: 10,
     borderWidth: 1,
     borderColor: 'gray',
     marginBottom: 20,
-  },
-  inputWithIcon: {
-    flex: 1,
-    padding: 10,
   },
   button: {
     backgroundColor: '#007BFF',

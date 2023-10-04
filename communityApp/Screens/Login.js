@@ -13,10 +13,6 @@ const LoginScreen = ({ navigation }) => {
     navigation.navigate('Homepage');
   };
 
-  const redirectSignup = () => {
-    console.log('Redirect');
-  };
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
@@ -46,31 +42,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  textContainer: {
-    alignSelf: 'stretch',
-  },
   title: {
     fontSize: 24,
     marginBottom: 20,
-    textAlign: 'left',
   },
-  label: {
-    fontSize: 16,
-    marginBottom: 5,
-    textAlign: 'left',
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  input: {
     width: 300,
     height: 40,
+    padding: 10,
     borderWidth: 1,
     borderColor: 'gray',
     marginBottom: 20,
-  },
-  inputWithIcon: {
-    flex: 1,
-    padding: 10,
   },
   button: {
     backgroundColor: '#007BFF',
@@ -81,21 +63,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 18,
-  },
-  bottomTextContainer: {
-    flexDirection: 'row',
-    position: 'absolute',
-    bottom: 20,
-    alignItems: 'center',
-  },
-  bottomText: {
-    fontSize: 12,
-    color: 'gray',
-    marginHorizontal: 10,
-  },
-  hyperlinkText: {
-    fontSize: 12,
-    color: 'blue',
   },
 });
 
