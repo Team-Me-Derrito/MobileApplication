@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import BlackButton from "./Components/BlackButton";
 
-
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -11,6 +10,7 @@ const LoginScreen = () => {
     //Login logic to be updated
     console.log('Email:', email);
     console.log('Password:', password);
+    navigation.navigate('Homepage');
   };
 
   const redirectSignup = () => {
@@ -19,44 +19,22 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>Login</Text>
-        <Text style={styles.label}>Email</Text>
-      </View>
-      <View style={styles.inputContainer}>
-        <MaterialIcons name="email" size={16} color="gray" paddingLeft={10} />
-        <TextInput
-            style={styles.inputWithIcon}
-            placeholder="Your Email"
-            onChangeText={text => setEmail(text)}
-            value={email}
-        />
-      </View>
-
-      <View style={styles.textContainer}>
-        <Text style={styles.label}>Password</Text>
-      </View>
-      <View style={styles.inputContainer}>
-        <MaterialIcons name="lock" size={16} color="gray" paddingLeft={10} />
-        <TextInput
-            style={styles.inputWithIcon}
-            placeholder="Your Password"
-            secureTextEntry
-            onChangeText={text => setPassword(text)}
-            value={password}
-        />
-      </View>
-
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-
-      <View style={styles.bottomTextContainer}>
-        <Text style={styles.bottomText}>Don't have an account?</Text>
-        <TouchableOpacity onPress={redirectSignup}>
-          <Text style={styles.hyperlinkText}>Signup</Text>
-        </TouchableOpacity>
-      </View>
+      <Text style={styles.title}>Login</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        onChangeText={text => setEmail(text)}
+        value={email}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        secureTextEntry
+        onChangeText={text => setPassword(text)}
+        value={password}
+      />
+      <BlackButton onPress={handleLogin} text="Login" borderRadius={2} />
+      <BlackButton onPress={() => navigation.navigate('Signup')} text="Sign Up" borderRadius={2} />
     </View>
   );
 };
