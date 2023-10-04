@@ -3,7 +3,6 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button} from 'reac
 import BlackButton from "./Components/BlackButton";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
-import DatePicker from 'react-native-date-picker'
 
 const EventCreationScreen = ({navigation}) => {
   const [title, setTitle] = useState('');
