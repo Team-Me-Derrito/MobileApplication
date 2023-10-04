@@ -1,16 +1,56 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import {
+BASE_URL,
+API_KEY,
+COMMUNITY_ID,
+NAME,
+AGE,
+GENDER,
+PHONE_NUMBER,
+EMAIL,
+PASSWORD,
+SALT
+} from '../constants/Database.js';
 
 const SignupScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSignup = () => {
-    //Sign up logic to be updated
+    //Validation step to be implemented
+
     console.log('Email:', email);
     console.log('Password:', password);
   };
+
+  async function createAccount() {
+    const url = BASE_URL;
+
+    const data = {
+      [COMMUNITY_ID]: null, //Replace those null values with actual variables
+      [NAME]: null,
+      [AGE]: null,
+      [GENDER]: null,
+      [PHONE_NUMBER]: null,
+      [EMAIL]: email,
+      [PASSWORD]: password,
+      [SALT]: null
+    };
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    const json = await response.json();
+    return json;
+
+  }
 
   const redirectLogin = () => {
     console.log('Redirect');
