@@ -38,6 +38,7 @@ const EventCreationScreen = ({navigation}) => {
             />
             <TextInput
               style={styles.inputLikes}
+              multiline={true}
               placeholder="Description"
               onChangeText={text => setDesc(text)}
               value={description}

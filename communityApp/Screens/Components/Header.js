@@ -42,18 +42,15 @@ const styles = StyleSheet.create({
     leftChildContainer: {
         width: '30%', // Adjust as needed for your desired spacing
         height: '100%', // Optional: Make child containers the same height
-        backgroundColor: 'lightgray', // Optional: Add background color
     },
     middleChildContainer: {
         width: '30%', // Adjust as needed for your desired spacing
         height: '100%', // Optional: Make child containers the same height
-        backgroundColor: 'lightgray', // Optional: Add background color
         alignItems: 'center',
     },
     rightChildContainer: {
         width: '30%', // Adjust as needed for your desired spacing
         height: '60%', // Optional: Make child containers the same height
-        backgroundColor: 'lightgray', // Optional: Add background color
         alignItems: 'right',
         justifyContent: 'flex-end', 
         flexDirection: 'row',
