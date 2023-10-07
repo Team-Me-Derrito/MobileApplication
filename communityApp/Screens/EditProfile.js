@@ -3,7 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button} from 'reac
 import BlackButton from "./Components/BlackButton";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
-import DatePicker from 'react-native-date-picker'
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { SimpleLineIcons } from '@expo/vector-icons';
 
 const EditProfileScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -11,9 +12,7 @@ const EditProfileScreen = ({navigation}) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [likes, setLikes] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [date, setDate] = useState(new Date())
-  const [open, setOpen] = useState(false)
+  const [birthday, setBirthday] = useState(new Date());
 
   const handleEdit = () => {
     //Sign up logic to be updated
@@ -22,31 +21,52 @@ const EditProfileScreen = ({navigation}) => {
     navigation.navigate('Profile');
   };
 
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    console.warn("A date has been picked: ", date);
+    setBirthday(date);
+    hideDatePicker();
+  };
+
   return (
     
     <View style={styles.showContainer}>
     <View>
         <View style={styles.row}>
-          <Header text="Events" />
+          <Header text="Edit" />
         </View>
         
     </View>
       <View style={styles.container}>
         <View>
           <View style={styles.container}>
-            <Text style={styles.title}>Signup</Text>
+            <Text style={styles.title}>Edit Profile</Text>
             <TextInput
               style={styles.input}
               placeholder="Name"
               onChangeText={text => setName(text)}
               value={name}
             />
-            <TextInput
-              style={styles.input}
-              placeholder="Birthday DD/MM/YYY"
-              onChangeText={text => setBirthday(text)}
-              value={birthday}
+            <Text>Birthday:</Text>
+            <View style={styles.dateContainer}>
+              <Button title={birthday.toLocaleDateString()} onPress={showDatePicker} color='black'/>
+              <SimpleLineIcons name="event" size={24} color="black" onPress={showDatePicker}/>
+            </View>
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible}
               mode="date"
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
+              textColor="#000"
             />
             <TextInput
               style={styles.inputLikes}
@@ -144,6 +164,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     marginBottom: 20,
+  },
+  dateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

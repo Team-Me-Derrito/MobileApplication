@@ -23,7 +23,7 @@ export default function Profile({ navigation }) {
     <View style={styles.showContainer}>
       <View>
         <View style={styles.row}>
-          <Header text="Eves" />
+          <Header text="Profile" />
         </View>   
       </View>
 
@@ -54,6 +54,9 @@ export default function Profile({ navigation }) {
             <View style={styles.buttonContainer}>
               <BlackButton onPress={() => navigation.navigate('EditProfile')} text="Edit Profile" borderRadius={2} />
               <BlackButton onPress={() => navigation.navigate('Login')} text="Logout" borderRadius={2} />
+            </View>
+            <View style={styles.buttonContainer}>
+              <BlackButton onPress={() => navigation.navigate('Game')} text="Game Tree" borderRadius={2} />
             </View>
           </ScrollView>
           </SafeAreaView>

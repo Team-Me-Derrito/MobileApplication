@@ -3,13 +3,31 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button} from 'reac
 import BlackButton from "./Components/BlackButton";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { SimpleLineIcons } from '@expo/vector-icons';
 
 const EventCreationScreen = ({navigation}) => {
   const [title, setTitle] = useState('');
   const [description, setDesc] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(new Date());
   const [time, setTime] = useState('');
   const [tags, setTags] = useState('');
+
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    console.warn("A date has been picked: ", date);
+    setDate(date);
+    hideDatePicker();
+  };
 
   const handleEventCreation = () => {
     //Sign up logic to be updated
@@ -22,14 +40,14 @@ const EventCreationScreen = ({navigation}) => {
     <View style={styles.showContainer}>
     <View>
         <View style={styles.row}>
-          <Header text="Events" />
+          <Header text="Event" />
         </View>
         
     </View>
       <View style={styles.container}>
         <View>
           <View style={styles.container}>
-            <Text style={styles.title}>Event</Text>
+            <Text style={styles.title}>Event Creation</Text>
             <TextInput
               style={styles.input}
               placeholder="Title"
@@ -43,11 +61,17 @@ const EventCreationScreen = ({navigation}) => {
               onChangeText={text => setDesc(text)}
               value={description}
             />
-            <TextInput
-              style={styles.input}
-              placeholder="Date DD/MM/YYYY"
-              onChangeText={text => setDate(text)}
-              value={date}
+            <Text>Date:</Text>
+            <View style={styles.dateContainer}>
+              <Button title={date.toLocaleDateString()} onPress={showDatePicker} color='black'/>
+              <SimpleLineIcons name="event" size={24} color="black" onPress={showDatePicker}/>
+            </View>
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="date"
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
+              textColor="#000"
             />
             <TextInput
               style={styles.input}
@@ -124,6 +148,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     marginBottom: 20,
+  },
+  dateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

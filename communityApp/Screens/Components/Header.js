@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { AntDesign } from '@expo/vector-icons'; 
 
 export default function Header({ text }) {
     console.log("showing header");
@@ -19,7 +20,7 @@ export default function Header({ text }) {
                 <Text style={styles.headerText}>{text}</Text>
             </View>
             <View style={styles.rightChildContainer}>
-                <SimpleLineIcons name="options-vertical" size={24} color="black" 
+                <AntDesign name="plus" size={24} color="black" 
                     onPress={() => navigation.navigate("EventCreation")}
                 />
             </View>

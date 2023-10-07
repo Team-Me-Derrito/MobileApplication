@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { AntDesign } from '@expo/vector-icons'; 
 
 export default function Footer() {
     console.log("showing header");
@@ -16,7 +17,7 @@ export default function Footer() {
                 <Ionicons name="search" size={32} color="black" />
             </View>
             <View >
-                <SimpleLineIcons name="event" size={24} color="black" />
+                <AntDesign name="enviroment" size={24} color="black" />
             </View>
             <View>
                 <SimpleLineIcons name="user" size={24} color="black" onPress={() => navigation.navigate('Profile')}/>
