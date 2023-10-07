@@ -2,55 +2,55 @@ import { BASE_URL, API_KEY, OPTION, ACCOUNT_ID, TOKEN, RECOMMENDED, UPCOMING, SE
 import { postRequest } from './BaseRequest.js';
 
 
-const endpoint = 'events';
+const path = 'events/';
 
 export async function getRecommended(token, id) {
     const message = {
         [TOKEN]: token,
-        [ACCOUNT_ID]: id,
-        [OPTION]: RECOMMENDED
+        [ACCOUNT_ID]: id
     };
 
-    await postRequest(endpoint, message);
+    const endpoint = path + RECOMMENDED; // events/recommended
+    return await postRequest(endpoint, message);
 }
 
 export async function getAllEvents(token, id) {
     const message = {
         [TOKEN]: token,
-        [ACCOUNT_ID]: id,
-        [OPTION]: ALL
+        [ACCOUNT_ID]: id
     };
 
-    await postRequest(endpoint, message);
+    const endpoint = path + ALL; // events/all
+    return await postRequest(endpoint, message);
 }
 
 export async function getUpcoming(token, id) {
     const message = {
         [TOKEN]: token,
-        [ACCOUNT_ID]: id,
-        [OPTION]: UPCOMING
+        [ACCOUNT_ID]: id
     };
 
-    await postRequest(endpoint, message);
+    const endpoint = path + UPCOMING; // events/upcoming
+    return await postRequest(endpoint, message);
 }
 
 export async function searchEvents(id, token, search) {
     const message = {
         [TOKEN]: token,
         [ACCOUNT_ID]: id,
-        [OPTION]: SEARCH,
         [QUERY]: search
     };
 
-    await postRequest(endpoint, message);
+    const endpoint = path + SEARCH; // events/search
+    return await postRequest(endpoint, message);
 }
 
 export async function getCommunityEvents(token, id) {
     const message = {
         [TOKEN]: token,
-        [ACCOUNT_ID]: id,
-        [OPTION]: COMMUNITY
+        [ACCOUNT_ID]: id
     };
 
-    await postRequest(endpoint, message);
+    const endpoint = path + COMMUNITY; // events/community
+    return await postRequest(endpoint, message);
 }
