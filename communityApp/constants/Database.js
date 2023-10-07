@@ -1,7 +1,6 @@
 //API
 export const BASE_URL = 'http://127.0.0.1/api';
 export const API_KEY = 'api_key';
-export const OPTION = 'option';
 
 //Account entity
 export const ACCOUNT_ID = 'account_id';
@@ -14,6 +13,8 @@ export const EMAIL = 'Email';
 export const PASSWORD = 'Password';
 export const SALT = 'Salt';
 export const TOKEN = 'token';
+export const FETCH = 'fetch';
+export const CREATE = 'create';
 
 //Event entity
 export const EVENT_ID = 'event_id';
