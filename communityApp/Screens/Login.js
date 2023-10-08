@@ -1,16 +1,40 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import BlackButton from "./Components/BlackButton";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    //Login logic to be updated
+  async function checkLogin (){
+    try {
+      const userToken = await AsyncStorage.getItem('userToken');
+      if (userToken != null) {
+        navigation.navigate('Homepage');
+      }
+    } catch (error) {
+      console.error('Error checking user token:', error);
+    }
+  }
+
+  checkLogin();
+
+  async function handleLogin (){
     console.log('Email:', email);
     console.log('Password:', password);
-    navigation.navigate('Homepage');
+
+    if(email == 'test' && password == 'pass'){
+      try{
+        await AsyncStorage.setItem('userToken', email);
+      } catch {
+        console.error('Error Saving Token')
+      }
+    
+      navigation.navigate('Homepage');
+    } else {
+      console.error("Wrong Email or Password")
+    }
   };
 
   return (

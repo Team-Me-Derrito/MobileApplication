@@ -5,6 +5,7 @@ import Header from './Components/Header';
 import Footer from './Components/Footer';
 import EventBox from './Components/EventBox';
 import { Rating } from 'react-native-ratings';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function test() {
     console.log('test');
@@ -18,6 +19,26 @@ export default function Profile({ navigation }) {
   const birthday = 'May 9th, 2002';
   const location = 'Indooroopilly, Qld';
   const likes = 'Jogging, Hiking, Sports';
+
+  async function checkUserToken() {
+    try {
+      const userToken = await AsyncStorage.getItem('userToken');
+      console.log(userToken);
+    } catch (error) {
+      console.error('Error checking user token:', error);
+    }
+  }
+
+  async function handleLogout() {
+    try {
+      await AsyncStorage.removeItem('userToken');
+    } catch (error) {
+      console.error('Error removing user token:', error);
+    }
+    navigation.navigate('Login');
+  }
+
+  checkUserToken();
 
   return (
     <View style={styles.showContainer}>
@@ -53,7 +74,7 @@ export default function Profile({ navigation }) {
             <Text style={styles.detail}>Likes: {likes}</Text>
             <View style={styles.buttonContainer}>
               <BlackButton onPress={() => navigation.navigate('EditProfile')} text="Edit Profile" borderRadius={2} />
-              <BlackButton onPress={() => navigation.navigate('Login')} text="Logout" borderRadius={2} />
+              <BlackButton onPress={() => handleLogout()} text="Logout" borderRadius={2} />
             </View>
             <View style={styles.buttonContainer}>
               <BlackButton onPress={() => navigation.navigate('Game')} text="Game Tree" borderRadius={2} />
