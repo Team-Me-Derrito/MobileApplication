@@ -1,14 +1,30 @@
 import { StyleSheet, Text, View, Pressable, SafeAreaView, Button, Switch } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import BlackButton from "./Components/BlackButton";
 import NiceToggle from "./Components/NiceToggle";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import EventBox from './Components/EventBox';
+import { getAllEvents } from '../API/Events';
 
 export default function Homepage({ navigation }) {
-    
+    const [events, setEvents] = useState([]);
+    console.log("Opening hoepage");
+    useEffect(() => {
+        async function getData() {
+            debugger;
+            const json = await getAllEvents(1,1);
+            debugger;
+
+        }
+        
+        if (! events.length) {
+            debugger;
+            getData();
+        }
+    });
+
     return (
         <View style={styles.showContainer}>
             <View>
@@ -19,6 +35,9 @@ export default function Homepage({ navigation }) {
             </View>
             <View style={styles.container}>
                 <View>
+                    {events.forEach(element => {
+                        <Text>{element}</Text>
+                    })};
                     <EventBox />
                     <Text>You're content goes in here</Text>
                 </View>
