@@ -9,17 +9,43 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 const SignupScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [likes, setLikes] = useState('');
   const [birthday, setBirthday] = useState(new Date());
 
   const handleSignup = () => {
-    //Sign up logic to be updated
+    if (!validateEmail(email)) {
+      console.log(`Invalid email: ${email}`);
+    }
+
+    if (!validatePhone(number)) {
+      console.log(`Invalid phone: ${number}`);
+    }
+    if (!validatePassword(password, passwordConfirm)) {
+      console.log(`Passwords do not match: ${password} and ${passwordConfirm}`);
+    }
     console.log('Email:', email);
-    console.log('Password:', password);
+    console.log('Birthday:', birthday);
+    
     navigation.navigate('Login');
   };
+
+  const validateEmail = (email) => {
+    // Regular expression for email validation
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(email);
+  };
+
+  const validatePhone = (phone) => {
+    //Checks if the phone number consists of 10 digits numbers
+    return /^[1-9][0-9]{9}$/.test(phone);
+  };
+  
+  const validatePassword = (password, passwordConfirm) => {
+    return ((password.length !== 0) && (password === passwordConfirm));
+  }
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -39,7 +65,7 @@ const SignupScreen = ({navigation}) => {
 
   return (
     
-    <View style={styles.showContainer}>
+  <View style={styles.showContainer}>
     <View>
         <View style={styles.row}>
           <Header text="Signup" />
@@ -80,6 +106,7 @@ const SignupScreen = ({navigation}) => {
               onChangeText={text => setNumber(text)}
               keyboardType="numeric"
               value={number}
+              maxLength={10}
             />
             <TextInput
               style={styles.input}
@@ -98,16 +125,23 @@ const SignupScreen = ({navigation}) => {
               style={styles.input}
               placeholder="Confirm Password"
               secureTextEntry
-              onChangeText={text => setPassword(text)}
-              value={password}
+              onChangeText={text => setPasswordConfirm(text)}
+              value={passwordConfirm}
             />
-            <BlackButton onPress={handleSignup} text="Save" borderRadius={2} />
+            <BlackButton onPress={handleSignup} text="Create" borderRadius={2} />
         </View>
+
+        <View style={styles.bottomTextContainer}>
+        <Text style={styles.bottomText}>Already signed up?</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.hyperlinkText}>Login</Text>
+        </TouchableOpacity>
+      </View>      
       </View>
     </View>
     <View style={styles.row}>
     </View>
-</View>
+  </View>
   );
 };
 
@@ -165,6 +199,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  bottomTextContainer: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 20,
+    alignItems: 'center',
+  },
+  bottomText: {
+    fontSize: 12,
+    color: 'gray',
+    marginHorizontal: 10,
+  },
+  hyperlinkText: {
+    fontSize: 12,
+    color: 'blue',
+  },
+
 });
 
 export default SignupScreen;
