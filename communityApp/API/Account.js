@@ -1,4 +1,4 @@
-import { BASE_URL, API_KEY, ACCOUNT_ID, COMMUNITY_ID, NAME, AGE, GENDER, PHONE, EMAIL, PASSWORD, SALT, TOKEN, OPTION, FETCH, CREATE } from '../constants/Database.js';
+import { ACCOUNT_ID, COMMUNITY_ID, NAME, GENDER, PHONE, EMAIL, PASSWORD, SALT, TOKEN, FETCH, CREATE, BIRTHDAY } from '../constants/Database.js';
 import { postRequest } from './BaseRequest.js';
 
 
@@ -14,11 +14,11 @@ export async function getAccount(token, id) {
     return await postRequest(endpoint, message);
 }
 
-export async function createAccount(communityId, name, age, gender, phone, email, password, salt) {
+export async function createAccount(communityId, name, birthday, gender, phone, email, password, salt) {
     const message = {
         [COMMUNITY_ID]: communityId,
         [NAME]: name,
-        [AGE]: age,
+        [BIRTHDAY]: birthday,
         [GENDER]: gender,
         [PHONE]: phone,
         [EMAIL]: email,
@@ -26,6 +26,6 @@ export async function createAccount(communityId, name, age, gender, phone, email
         [SALT]: salt
     }
 
-    const endpoint = oath + CREATE; // accounts/create
+    const endpoint = path + CREATE; // accounts/create
     return await postRequest(endpoint, message);
 }
