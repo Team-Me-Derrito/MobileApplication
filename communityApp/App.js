@@ -10,6 +10,7 @@ import Eventpage from './Screens/Eventpage';
 import EditProfile from './Screens/EditProfile';
 import EventCreation from './Screens/EventCreation';
 import Game from './Screens/Game';
+import DiscussionBoard from './Screens/DiscussionBoard';
 
 
 const Stack = createStackNavigator();
@@ -27,6 +28,7 @@ export default function App (){
         <Stack.Screen name="EditProfile" component={EditProfile} options={{ headerShown: false }}/>
         <Stack.Screen name="EventCreation" component={EventCreation} options={{ headerShown: false }}/>
         <Stack.Screen name="Game" component={Game} options={{ headerShown: false }}/>
+        <Stack.Screen name="DiscussionBoard" component={DiscussionBoard} options={{ headerShown: false }}/>
       </Stack.Navigator>
       </SafeAreaView>
     </NavigationContainer>
