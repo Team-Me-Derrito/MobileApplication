@@ -40,21 +40,28 @@ const LoginScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={text => setEmail(text)}
-        value={email}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        onChangeText={text => setPassword(text)}
-        value={password}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          onChangeText={text => setEmail(text)}
+          value={email}
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry
+          onChangeText={text => setPassword(text)}
+          value={password}
+        />
       <BlackButton onPress={handleLogin} text="Login" borderRadius={2} />
-      <BlackButton onPress={() => navigation.navigate('Signup')} text="Sign Up" borderRadius={2} />
+      <View style={styles.bottomTextContainer}>
+        <Text style={styles.bottomText}>Don't have an account?</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+          <Text style={styles.hyperlinkText}>Signup</Text>
+        </TouchableOpacity>
+      </View>      
+      {/* <BlackButton onPress={() => navigation.navigate('Signup')} text="Sign Up" borderRadius={2} /> */}
     </View>
   );
 };
@@ -87,6 +94,21 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 18,
+  },
+  bottomTextContainer: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 20,
+    alignItems: 'center',
+  },
+  bottomText: {
+    fontSize: 12,
+    color: 'gray',
+    marginHorizontal: 10,
+  },
+  hyperlinkText: {
+    fontSize: 12,
+    color: 'blue',
   },
 });
 
