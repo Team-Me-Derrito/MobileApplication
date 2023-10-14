@@ -68,13 +68,13 @@ const SignupScreen = ({navigation}) => {
   <View style={styles.showContainer}>
     <View>
         <View style={styles.row}>
-          <Header text="Signup" />
         </View>
         
     </View>
       <View style={styles.container}>
         <View>
           <View style={styles.container}>
+            <Text style = {styles.title}>Signup</Text>
             <TextInput
               style={styles.input}
               placeholder="Name"
@@ -204,11 +204,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   bottomText: {
     fontSize: 12,
     color: 'gray',
-    marginHorizontal: 10,
+    marginHorizontal: 40,
   },
   hyperlinkText: {
     fontSize: 12,

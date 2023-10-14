@@ -5,9 +5,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function EventBox({
     onPress,
-    title,
     text,
-    location,
+    name,
     imagePath="../../assets/Event_images/football.jpeg",
     borderRadius = 5,
     opacity = 1,
@@ -19,23 +18,20 @@ export default function EventBox({
         
         <Pressable style={({ pressed }) => [
             {
-                backgroundColor: pressed ? 'maroon' : 'white',
-                opacity: pressed ? 1 : opacity,
+                backgroundColor: 'white',
+                opacity: 1,
                 borderWidth: 5,
-                borderColor: pressed ? 'maroon' : "red",
+                borderColor: 'grey',
                 borderRadius: 10,
-                height: height * 0.2,
-                width: width * 0.8,
+                height: height * 0.1,
+                width: width * 0.9,
                 borderWidth: borderRadius,
                 alignItems: "left",
-                padding: 7
+                padding: 10,
             },
-            ]} onPress={onPress} >
-            <Text style={{color: "black", fontWeight: "bold", fontSize: 24}} >{title}</Text>
-            <Text style={{color: "black", fontWeight: "bold", fontSize: 14}} >Description:</Text>
+            ]} >
+            <Text style={{color: "black", fontWeight: "bold"}} >{name}</Text>
             <Text style={{color: "black"}} >{text}</Text>
-            <Text style={{color: "black", fontWeight: "bold", fontSize: 14}} >Location:</Text>
-            <Text style={{color: "black"}} >{location}</Text>
         </Pressable>
     );
 }

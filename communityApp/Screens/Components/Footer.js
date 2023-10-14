@@ -14,7 +14,7 @@ export default function Footer() {
                 <Ionicons name="home" size={32} color="black" onPress={() => navigation.navigate('Homepage')}/>
             </View>
             <View >
-                <Ionicons name="search" size={32} color="black" />
+                <AntDesign name="message1" size={24} color="black" onPress={() => navigation.navigate('DiscussionBoard')}/>
             </View>
             <View >
                 <AntDesign name="enviroment" size={24} color="black" />
