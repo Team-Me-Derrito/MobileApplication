@@ -32,7 +32,6 @@ export default function Homepage({ navigation }) {
         async function getData() {
             const result = await getAllEvents();
             setEvents(result.events);
-            console.log("result is ", result.events);
         }
         if (! events.length) {
             getData();
