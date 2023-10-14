@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, SafeAreaView, Button, Switch } from 'react-native';
+import { StyleSheet, Text, View, Pressable, SafeAreaView, Button, Switch, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import BlackButton from "./Components/BlackButton";
@@ -9,6 +9,20 @@ import EventBox from './Components/EventBox';
 
 export default function Homepage({ navigation }) {
     
+    function handlePress(header, text, location) {
+        //Sign up logic to be updated
+        console.log('Title:', header);
+        params = {
+            title: header,
+            text: text,
+            location: location,
+        };
+        navigation.navigate('Eventpage', params);
+    };
+
+    const title = 'Soccer';
+    const text = 'Come Play Some Games in the Park';
+    const location = 'Kenmore Park';
     return (
         <View style={styles.showContainer}>
             <View>
@@ -17,12 +31,13 @@ export default function Homepage({ navigation }) {
                 </View>
                 
             </View>
+            <ScrollView>
             <View style={styles.container}>
                 <View>
-                    <EventBox />
-                    <Text>You're content goes in here</Text>
+                    <EventBox title={title} text ={text} location = {location} onPress={() => handlePress(title, text, location)}/>
                 </View>
             </View>
+            </ScrollView>
             <View style={styles.row}>
                     <Footer />
             </View>
