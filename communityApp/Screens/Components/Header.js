@@ -6,7 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons'; 
 
 export default function Header({ text }) {
-    console.log("showing header");
     const navigation = useNavigation();
     return (
         <View style={styles.headerContainer}>

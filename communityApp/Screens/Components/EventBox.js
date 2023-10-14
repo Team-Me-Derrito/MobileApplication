@@ -28,14 +28,15 @@ export default function EventBox({
                 width: width * 0.8,
                 borderWidth: borderRadius,
                 alignItems: "left",
-                padding: 7
+                padding: 7,
+                marginBottom: 5,
             },
             ]} onPress={onPress} >
-            <Text style={{color: "black", fontWeight: "bold", fontSize: 24}} >{title}</Text>
+            <Text numberOfLines={1} style={{color: "black", fontWeight: "bold", fontSize: 24}} >{title}</Text>
             <Text style={{color: "black", fontWeight: "bold", fontSize: 14}} >Description:</Text>
-            <Text style={{color: "black"}} >{text}</Text>
+            <Text numberOfLines={3} style={{color: "black"}} >{text}</Text>
             <Text style={{color: "black", fontWeight: "bold", fontSize: 14}} >Location:</Text>
-            <Text style={{color: "black"}} >{location}</Text>
+            <Text numberOfLines={3} style={{color: "black"}} >{location}</Text>
         </Pressable>
     );
 }

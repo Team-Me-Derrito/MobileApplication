@@ -24,7 +24,7 @@ const LoginScreen = ({ navigation }) => {
     console.log('Email:', email);
     console.log('Password:', password);
 
-    if(email == 'Test' && password == 'pass'){
+    if(email && password){
       try{
         await AsyncStorage.setItem('userToken', email);
       } catch {

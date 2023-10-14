@@ -1,5 +1,5 @@
 //API
-export const BASE_URL = 'http://127.0.0.1/api';
+export const BASE_URL = 'http://192.168.20.104:8001/api';
 export const API_KEY = 'api_key';
 
 //Account entity
