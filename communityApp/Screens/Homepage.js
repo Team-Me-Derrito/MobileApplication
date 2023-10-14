@@ -6,7 +6,6 @@ import NiceToggle from "./Components/NiceToggle";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import EventBox from './Components/EventBox';
-import { getAllEvents } from '../API/Events';
 
 export default function Homepage({ navigation }) {
     
