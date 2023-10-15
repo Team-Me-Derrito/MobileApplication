@@ -24,3 +24,6 @@ export const SEARCH = 'search';
 export const ALL = 'all';
 export const COMMUNITY = 'community';
 export const QUERY = 'query';
+
+//Community entity
+export const POSTS = 'posts'
