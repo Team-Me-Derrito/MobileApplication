@@ -5,19 +5,18 @@ import BlackButton from "./Components/BlackButton";
 import NiceToggle from "./Components/NiceToggle";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
-import { getEvent } from '../API/Events';
+import { getEvent, setAttendence } from '../API/Events';
 
-function test() {
-    console.log('Button Pressed!');
+
+function handleJoin(navigation, ticketed) {
+  console.log("");
 }
+
 export default function Eventpage({ navigation, route }) {
 
   const id = route.params;
-
-  function handleJoin() {
-    navigation.navigate('Homepage');
-  }
-const [event, setEvent] = useState("");
+  const [event, setEvent] = useState("");
+  const [ticketed, setTicketed] = useState(false);
   useEffect(() => {
     async function getData() {
       const result = await getEvent("token","account_id",id);

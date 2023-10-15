@@ -1,4 +1,4 @@
-import { ACCOUNT_ID, TOKEN, RECOMMENDED, UPCOMING, SEARCH, ALL, COMMUNITY, QUERY, EVENT_ID } from '../constants/Database.js';
+import { ACCOUNT_ID, TOKEN, RECOMMENDED, UPCOMING, SEARCH, ALL, COMMUNITY, QUERY, EVENT_ID, EVENT_TICKET } from '../constants/Database.js';
 import { postRequest } from './BaseRequest.js';
 
 
@@ -100,5 +100,26 @@ export async function getCommunityEvents(token, id) {
     };
 
     const endpoint = path + COMMUNITY; // events/community
+    return await postRequest(endpoint, message);
+}
+
+
+/**
+ * Get the list of events with the search keywords
+ * 
+ * @param {string} token access token for the session
+ * @param {Number} id account ID
+ * @param {string} ticketed boolean for accounts attendence to event
+ * @returns Json object containing the list of corresponding events
+ */
+export async function setAttendence(token, id, ticketed, eventID) {
+    const message = {
+        [TOKEN]: token,
+        [ACCOUNT_ID]: id,
+        [EVENT_TICKET]: ticketed,
+        [EVENT_ID]: eventID
+    };
+
+    const endpoint = path + EVENT_TICKET; // /api/events/event_ticket
     return await postRequest(endpoint, message);
 }
