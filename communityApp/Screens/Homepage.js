@@ -8,22 +8,13 @@ import Footer from './Components/Footer';
 import EventBox from './Components/EventBox';
 import { getAllEvents } from '../API/Events';
 
-function handlePress(header, text, location) {
+//Just takes the ID of the event and will fetch to get all information about it not sent with initial fetch
+function handlePress(id, navigation) {
     //Sign up logic to be updated
-    console.log('Title:', header);
-    params = {
-        title: header,
-        text: text,
-        location: location,
-    };
-    navigation.navigate('Eventpage', params);
+    navigation.navigate('Eventpage', id);
 };
 
 export default function Homepage({ navigation }) {
-    
-    
-
-
     const title = 'Soccer';
     const text = 'Come Play Some Games in the Park';
     const location = 'Kenmore Park';
@@ -50,9 +41,8 @@ export default function Homepage({ navigation }) {
             <View style={styles.container}>
                 <View>
                     {events.map((event, index) => (
-                        <EventBox title={event.eventName} text ={event.description} location = {event.venue} onPress={() => handlePress(event.eventName, event.description, event.venue)} />
+                        <EventBox title={event.eventName} text ={event.description} location = {event.venue} onPress={() => handlePress(event.eventID, navigation)} />
                     ))}
-                    <EventBox title={title} text ={text} location = {location} onPress={() => handlePress(title, text, location)}/>
                 </View>
             </View>
             </ScrollView>

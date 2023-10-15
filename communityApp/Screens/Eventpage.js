@@ -1,27 +1,38 @@
 import { StyleSheet, Text, View, Pressable, SafeAreaView, Button, Switch, ScrollView} from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import BlackButton from "./Components/BlackButton";
 import NiceToggle from "./Components/NiceToggle";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
+import { getEvent } from '../API/Events';
 
 function test() {
     console.log('Button Pressed!');
 }
 export default function Eventpage({ navigation, route }) {
 
-  const {title, text, location} = route.params;
+  const id = route.params;
 
   function handleJoin() {
     navigation.navigate('Homepage');
   }
-
+const [event, setEvent] = useState("");
+  useEffect(() => {
+    async function getData() {
+      const result = await getEvent("token","account_id",id);
+      setEvent(result);
+    }
+    if (! event) {
+      getData();
+    }
+      
+  }, []);
   return (
     <View style={styles.showContainer}>
       <View>
         <View style={styles.row}>
-          <Header text={title} />
+          <Header text={event.eventName} />
         </View>   
       </View>
 
@@ -30,9 +41,9 @@ export default function Eventpage({ navigation, route }) {
           <SafeAreaView style={styles.container}>
           <ScrollView contentContainerStyle={styles.profileContainer}>
             <Text style={styles.bio}>Description:</Text>
-            <Text style={styles.detail}>{text}</Text>
+            <Text style={styles.detail}>{event.description}</Text>
             <Text style={styles.bio}>Location:</Text>
-            <Text style={styles.detail}>{location}</Text>
+            <Text style={styles.detail}>{event.venue}</Text>
             <View style={styles.buttonContainer}>
                 <BlackButton onPress={() => handleJoin()} text="Join" borderRadius={2} />
             </View>

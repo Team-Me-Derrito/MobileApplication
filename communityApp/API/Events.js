@@ -1,4 +1,4 @@
-import { ACCOUNT_ID, TOKEN, RECOMMENDED, UPCOMING, SEARCH, ALL, COMMUNITY, QUERY } from '../constants/Database.js';
+import { ACCOUNT_ID, TOKEN, RECOMMENDED, UPCOMING, SEARCH, ALL, COMMUNITY, QUERY, EVENT_ID } from '../constants/Database.js';
 import { postRequest } from './BaseRequest.js';
 
 
@@ -18,6 +18,18 @@ export async function getRecommended(token, id) {
     };
 
     const endpoint = path + RECOMMENDED; // events/recommended
+    return await postRequest(endpoint, message);
+}
+
+export async function getEvent(token, id, eventID) {
+    console.log(token, id, eventID);
+    const message = {
+        [TOKEN]: token,
+        [ACCOUNT_ID]: id,
+        [EVENT_ID]: eventID
+    };
+
+    const endpoint = path + EVENT_ID;
     return await postRequest(endpoint, message);
 }
 
