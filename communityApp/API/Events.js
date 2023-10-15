@@ -4,7 +4,6 @@ import { postRequest } from './BaseRequest.js';
 
 const path = 'events/';
 
-<<<<<<< HEAD
 /**
  * Get the list of recommended events fir the user
  * 
@@ -12,8 +11,6 @@ const path = 'events/';
  * @param {Number} id account ID
  * @returns Json object containing the list of the recommended events
  */
-=======
->>>>>>> main
 export async function getRecommended(token, id) {
     const message = {
         [TOKEN]: token,
@@ -24,7 +21,6 @@ export async function getRecommended(token, id) {
     return await postRequest(endpoint, message);
 }
 
-<<<<<<< HEAD
 /**
  * Get the list of all events available
  * 
@@ -32,8 +28,6 @@ export async function getRecommended(token, id) {
  * @param {Number} id account ID
  * @returns Json object containing the list of all events
  */
-=======
->>>>>>> main
 export async function getAllEvents(token, id) {
     const message = {
         [TOKEN]: token,
@@ -44,7 +38,6 @@ export async function getAllEvents(token, id) {
     return await postRequest(endpoint, message);
 }
 
-<<<<<<< HEAD
 /**
  * Get the list of upcoming events
  * 
@@ -52,8 +45,6 @@ export async function getAllEvents(token, id) {
  * @param {Number} id account ID
  * @returns Json object containing the list of upcoming events
  */
-=======
->>>>>>> main
 export async function getUpcoming(token, id) {
     const message = {
         [TOKEN]: token,
@@ -64,7 +55,6 @@ export async function getUpcoming(token, id) {
     return await postRequest(endpoint, message);
 }
 
-<<<<<<< HEAD
 /**
  * Get the list of events with the search keywords
  * 
@@ -74,9 +64,6 @@ export async function getUpcoming(token, id) {
  * @returns Json object containing the list of corresponding events
  */
 export async function searchEvents(token, id, search) {
-=======
-export async function searchEvents(id, token, search) {
->>>>>>> main
     const message = {
         [TOKEN]: token,
         [ACCOUNT_ID]: id,
@@ -87,7 +74,6 @@ export async function searchEvents(id, token, search) {
     return await postRequest(endpoint, message);
 }
 
-<<<<<<< HEAD
 /**
  * Get the list of events inside the specific community that the user belongs
  * 
@@ -95,8 +81,6 @@ export async function searchEvents(id, token, search) {
  * @param {*} id account ID
  * @returns Json object containing the list of corresponding events
  */
-=======
->>>>>>> main
 export async function getCommunityEvents(token, id) {
     const message = {
         [TOKEN]: token,

@@ -65,8 +65,7 @@ export async function createAccount(communityId, name, interestTypes, birthday, 
         [GENDER]: gender,
         [PHONE]: phone,
         [EMAIL]: email,
-        [PASSWORD]: password,
-        [SALT]: salt
+        [PASSWORD]: password
     }
 
     const endpoint = path + ACCOUNT_CREATE_URL; // accounts/create
