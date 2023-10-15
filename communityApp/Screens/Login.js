@@ -1,35 +1,67 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import BlackButton from "./Components/BlackButton";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    //Login logic to be updated
+  async function checkLogin (){
+    try {
+      const userToken = await AsyncStorage.getItem('userToken');
+      if (userToken != null) {
+        navigation.navigate('Homepage');
+      }
+    } catch (error) {
+      console.error('Error checking user token:', error);
+    }
+  }
+
+  checkLogin();
+
+  async function handleLogin (){
     console.log('Email:', email);
     console.log('Password:', password);
+
+    if(email && password){
+      try{
+        await AsyncStorage.setItem('userToken', email);
+      } catch {
+        console.error('Error Saving Token')
+      }
+    
+      navigation.navigate('Homepage');
+    } else {
+      console.error("Wrong Email or Password")
+    }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={text => setEmail(text)}
-        value={email}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        onChangeText={text => setPassword(text)}
-        value={password}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          onChangeText={text => setEmail(text)}
+          value={email}
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry
+          onChangeText={text => setPassword(text)}
+          value={password}
+        />
+      <BlackButton onPress={handleLogin} text="Login" borderRadius={2} />
+      <View style={styles.bottomTextContainer}>
+        <Text style={styles.bottomText}>Don't have an account?</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+          <Text style={styles.hyperlinkText}>Signup</Text>
+        </TouchableOpacity>
+      </View>      
+      {/* <BlackButton onPress={() => navigation.navigate('Signup')} text="Sign Up" borderRadius={2} /> */}
     </View>
   );
 };
@@ -62,6 +94,21 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 18,
+  },
+  bottomTextContainer: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 20,
+    alignItems: 'center',
+  },
+  bottomText: {
+    fontSize: 12,
+    color: 'gray',
+    marginHorizontal: 10,
+  },
+  hyperlinkText: {
+    fontSize: 12,
+    color: 'blue',
   },
 });
 

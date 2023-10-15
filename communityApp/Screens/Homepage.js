@@ -1,14 +1,43 @@
-import { StyleSheet, Text, View, Pressable, SafeAreaView, Button, Switch } from 'react-native';
-import React, { useState } from 'react';
+import { StyleSheet, Text, View, Pressable, SafeAreaView, Button, Switch, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import BlackButton from "./Components/BlackButton";
 import NiceToggle from "./Components/NiceToggle";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import EventBox from './Components/EventBox';
+import { getAllEvents } from '../API/Events';
+
+function handlePress(header, text, location) {
+    //Sign up logic to be updated
+    console.log('Title:', header);
+    params = {
+        title: header,
+        text: text,
+        location: location,
+    };
+    navigation.navigate('Eventpage', params);
+};
 
 export default function Homepage({ navigation }) {
     
+    
+
+
+    const title = 'Soccer';
+    const text = 'Come Play Some Games in the Park';
+    const location = 'Kenmore Park';
+    const [events, setEvents] = useState([]);
+    useEffect(() => {
+        async function getData() {
+            const result = await getAllEvents();
+            setEvents(result.events);
+        }
+        if (! events.length) {
+            getData();
+        }
+        
+    }, []);
     return (
         <View style={styles.showContainer}>
             <View>
@@ -17,12 +46,16 @@ export default function Homepage({ navigation }) {
                 </View>
                 
             </View>
+            <ScrollView>
             <View style={styles.container}>
                 <View>
-                    <EventBox />
-                    <Text>You're content goes in here</Text>
+                    {events.map((event, index) => (
+                        <EventBox title={event.eventName} text ={event.description} location = {event.venue} onPress={() => handlePress(event.eventName, event.description, event.venue)} />
+                    ))}
+                    <EventBox title={title} text ={text} location = {location} onPress={() => handlePress(title, text, location)}/>
                 </View>
             </View>
+            </ScrollView>
             <View style={styles.row}>
                     <Footer />
             </View>
