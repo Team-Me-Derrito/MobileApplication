@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View, Pressable, SafeAreaView, Button, TextInput, ScrollView } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import BlackButton from "./Components/BlackButton";
 import NiceToggle from "./Components/NiceToggle";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Comment from './Components/BoardComment'
+import { getAllEvents } from '../API/Events';
 
 export default function DiscussionBoard() {
     const [message, setMessage] = useState('');
@@ -15,6 +16,19 @@ export default function DiscussionBoard() {
         console.log('Message:', message);
         setMessage('')
     };
+
+    const [events, setEvents] = useState([]);
+    useEffect(() => {
+        async function getData() {
+            const result = await getAllEvents();
+            setEvents(result.events);
+        }
+        if (! events.length) {
+            getData();
+        }
+        
+    }, []);
+
     //Code goes here
     return (
         <View style={styles.showContainer}>
@@ -27,7 +41,9 @@ export default function DiscussionBoard() {
             <ScrollView>
             <View style={styles.container}>
                 <View>
-                    <Comment text="I Hate this community" name="John Davidson"/>
+                    {events.map((event, index) => (
+                        <Comment name={event.eventName} text ={event.description} />
+                    ))}
                 </View>
             </View>
             </ScrollView>
@@ -39,7 +55,7 @@ export default function DiscussionBoard() {
                     onChangeText={text => setMessage(text)}
                     value={message}
                 />
-                <BlackButton onPress={handleMessage} text="Send" borderRadius={2} width={80}/>
+                <BlackButton onPress={handleMessage} text="Send" borderRadius={2} width={80} />
                 </View>
             </View>
             <View style={styles.row}>
@@ -68,6 +84,7 @@ const styles = StyleSheet.create({
         backgroundColor: "red",
         justifyContent: 'space-between',
         paddingHorizontal: 10,
+        marginTop: 7
     },
     showContainer: {
         backgroundColor: "blue",

@@ -8,25 +8,19 @@ import Footer from './Components/Footer';
 import EventBox from './Components/EventBox';
 import { getAllEvents } from '../API/Events';
 
-function handlePress(header, text, location) {
-    //Sign up logic to be updated
-    console.log('Title:', header);
-    params = {
-        title: header,
-        text: text,
-        location: location,
-    };
-    navigation.navigate('Eventpage', params);
-};
-
 export default function Homepage({ navigation }) {
     
-    
+    function handlePress(header, text, location) {
+        //Sign up logic to be updated
+        console.log('Title:', header);
+        params = {
+            title: header,
+            text: text,
+            location: location,
+        };
+        navigation.navigate('Eventpage', params);
+    };
 
-
-    const title = 'Soccer';
-    const text = 'Come Play Some Games in the Park';
-    const location = 'Kenmore Park';
     const [events, setEvents] = useState([]);
     useEffect(() => {
         async function getData() {
@@ -52,7 +46,6 @@ export default function Homepage({ navigation }) {
                     {events.map((event, index) => (
                         <EventBox title={event.eventName} text ={event.description} location = {event.venue} onPress={() => handlePress(event.eventName, event.description, event.venue)} />
                     ))}
-                    <EventBox title={title} text ={text} location = {location} onPress={() => handlePress(title, text, location)}/>
                 </View>
             </View>
             </ScrollView>

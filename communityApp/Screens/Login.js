@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, useAnimatedValue } from 'react-native';
 import BlackButton from "./Components/BlackButton";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -10,6 +10,7 @@ const LoginScreen = ({ navigation }) => {
   async function checkLogin (){
     try {
       const userToken = await AsyncStorage.getItem('userToken');
+      console.log(userToken)
       if (userToken != null) {
         navigation.navigate('Homepage');
       }

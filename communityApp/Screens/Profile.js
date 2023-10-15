@@ -6,12 +6,29 @@ import Footer from './Components/Footer';
 import EventBox from './Components/EventBox';
 import { Rating } from 'react-native-ratings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getAccount } from '../API/Account';
+import React, { useState, useEffect } from 'react';
 
 function test() {
     console.log('test');
 }
 
 export default function Profile({ navigation }) {
+
+  const [token, setToken] = useState('');
+  checkUserToken();
+  const [account, setAccount] = useState([]);
+  useEffect(() => {
+      async function getData() {
+          const result = await getAccount(null, token);
+          setAccount(result);
+      }
+      if (! account.length) {
+          getData();
+      }
+        
+  }, []);
+
   const name = 'John Smith';
   const userRating = 4.5;
   const occupation = 'Developer';
@@ -23,7 +40,7 @@ export default function Profile({ navigation }) {
   async function checkUserToken() {
     try {
       const userToken = await AsyncStorage.getItem('userToken');
-      console.log(userToken);
+      setToken(userToken)
     } catch (error) {
       console.error('Error checking user token:', error);
     }
@@ -37,8 +54,6 @@ export default function Profile({ navigation }) {
     }
     navigation.navigate('Login');
   }
-
-  checkUserToken();
 
   return (
     <View style={styles.showContainer}>
@@ -120,7 +135,7 @@ const styles = StyleSheet.create({
   },
   profileImage: {
     width: 150,
-    height: 150,
+    height: 100,
     borderRadius: 75,
     marginBottom: 20,
   },
