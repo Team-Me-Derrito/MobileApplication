@@ -36,3 +36,6 @@ export const POSTS = 'posts';
 export const INTEREST_TYPES_ID = 'interest_type_id';
 export const INTEREST_TYPE_NAME = 'InterestType';
 export const INTEREST_TYPE_FETCH_URL = 'fetch';
+
+//Event attendance entity
+export const EVENT_TICKET = 'event_ticket';

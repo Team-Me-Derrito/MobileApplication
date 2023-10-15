@@ -8,12 +8,12 @@ import Footer from './Components/Footer';
 import { getEvent, setAttendence } from '../API/Events';
 
 
-function handleJoin(navigation, ticketed) {
-  console.log("");
+function handleJoin(navigation, ticketed, setTicketed, eventID) {
+  setAttendence(token, id, ticketed, eventID);
+  setTicketed(! ticketed);
 }
 
 export default function Eventpage({ navigation, route }) {
-
   const id = route.params;
   const [event, setEvent] = useState("");
   const [ticketed, setTicketed] = useState(false);
@@ -25,7 +25,6 @@ export default function Eventpage({ navigation, route }) {
     if (! event) {
       getData();
     }
-      
   }, []);
   return (
     <View style={styles.showContainer}>
@@ -44,7 +43,7 @@ export default function Eventpage({ navigation, route }) {
             <Text style={styles.bio}>Location:</Text>
             <Text style={styles.detail}>{event.venue}</Text>
             <View style={styles.buttonContainer}>
-                <BlackButton onPress={() => handleJoin()} text="Join" borderRadius={2} />
+                <BlackButton onPress={() => handleJoin(navigation, ticketed, setTicketed, id)} text="Join" borderRadius={2} />
             </View>
           </ScrollView>
           </SafeAreaView>
