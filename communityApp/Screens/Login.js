@@ -37,7 +37,7 @@ const LoginScreen = ({ navigation }) => {
       const response = await attemptLogin(email, password);
       console.log(`Response: ${JSON.stringify(response)}`);
       
-      //navigation.navigate('Homepage');
+      navigation.navigate('Homepage');
     } else {
       console.error("Wrong Email or Password");
     }
