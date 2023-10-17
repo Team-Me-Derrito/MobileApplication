@@ -21,7 +21,7 @@ export default function Eventpage({ navigation, route }) {
   const [ticketed, setTicketed] = useState(false);
   useEffect(() => {
     async function getData() {
-      let result = await getEvent("token", "1", id);
+      const result = await getEvent("token", "1", id);
       setEvent(result);
       const attendance = await getAttendence("token", "1", id);
       console.log("result is ", attendance);
