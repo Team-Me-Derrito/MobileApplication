@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import BlackButton from "./Components/BlackButton";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { attemptLogin } from '../API/Account'; 
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -18,7 +19,9 @@ const LoginScreen = ({ navigation }) => {
     }
   }
 
-  checkLogin();
+  //checkLogin();
+  // johndoe@gmail.com
+  // pass
 
   async function handleLogin (){
     console.log('Email:', email);
@@ -28,12 +31,15 @@ const LoginScreen = ({ navigation }) => {
       try{
         await AsyncStorage.setItem('userToken', email);
       } catch {
-        console.error('Error Saving Token')
+        console.error('Error Saving Token');
       }
-    
-      navigation.navigate('Homepage');
+
+      const response = await attemptLogin(email, password);
+      console.log(`Response: ${JSON.stringify(response)}`);
+      
+      //navigation.navigate('Homepage');
     } else {
-      console.error("Wrong Email or Password")
+      console.error("Wrong Email or Password");
     }
   };
 
@@ -61,7 +67,6 @@ const LoginScreen = ({ navigation }) => {
           <Text style={styles.hyperlinkText}>Signup</Text>
         </TouchableOpacity>
       </View>      
-      {/* <BlackButton onPress={() => navigation.navigate('Signup')} text="Sign Up" borderRadius={2} /> */}
     </View>
   );
 };

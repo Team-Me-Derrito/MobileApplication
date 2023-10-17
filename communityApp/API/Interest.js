@@ -1,6 +1,8 @@
 import { INTEREST_TYPE_FETCH_URL } from "../constants/Database";
+import { postRequest } from './BaseRequest.js';
 
-const path = 'interest_type/';
+
+const path = 'interests/';
 
 /**
  * Get the list of interest types.
