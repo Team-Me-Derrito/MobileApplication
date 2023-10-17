@@ -16,6 +16,7 @@ export async function getCommunities() {
     };
 
     const endpoint = path + COMMUNITY_FETCH_URL; // community/fetch
+    return await postRequest(endpoint, message);
 }
 
 /**

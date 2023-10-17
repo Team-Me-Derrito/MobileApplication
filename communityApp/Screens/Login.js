@@ -34,7 +34,7 @@ const LoginScreen = ({ navigation }) => {
         console.error('Error Saving Token');
       }
 
-      response = await attemptLogin(email, password);
+      const response = await attemptLogin(email, password);
       console.log(`Response: ${JSON.stringify(response)}`);
       
       //navigation.navigate('Homepage');

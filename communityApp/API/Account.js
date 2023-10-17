@@ -46,8 +46,8 @@ export async function attemptLogin(email, password) {
  * @param {Number} communityId community_id property
  * @param {string} name AccountName property
  * @param {object} interestTypes Array of selected interest types ids.
- * structure looks like:
- * [1, 45, 23, 22] <- you can assume those elements are Number type
+ *                          structure looks like:
+ *                          [1, 45, 23, 22] <- you can assume those elements are Number type
  * @param {Date} birthday Birthday property
  * @param {string} gender Gender property
  * @param {string} phone PhoneNumber property
@@ -56,7 +56,7 @@ export async function attemptLogin(email, password) {
  * 
  * @returns Json object to tell if the creation went successfully
  */
-export async function createAccount(communityId, name, interestTypes, birthday, gender, phone, email, password, salt) {
+export async function createAccount(communityId, name, interestTypes, birthday, gender, phone, email, password) {
     const message = {
         [COMMUNITY_ID]: communityId,
         [ACCOUNT_NAME]: name,
