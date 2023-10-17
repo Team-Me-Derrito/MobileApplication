@@ -5,11 +5,13 @@ import BlackButton from "./Components/BlackButton";
 import NiceToggle from "./Components/NiceToggle";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
-import { getEvent, setAttendence } from '../API/Events';
+import { getEvent, setAttendence, getAttendence } from '../API/Events';
 
 
 function handleJoin(navigation, ticketed, setTicketed, eventID) {
-  setAttendence(token, id, ticketed, eventID);
+  const state = ticketed; //Possible race condition with setting then sending
+  console.log("sending", ! state, state);
+  setAttendence("token", "1", ! state, eventID);
   setTicketed(! ticketed);
 }
 
@@ -19,8 +21,11 @@ export default function Eventpage({ navigation, route }) {
   const [ticketed, setTicketed] = useState(false);
   useEffect(() => {
     async function getData() {
-      const result = await getEvent("token","account_id",id);
+      let result = await getEvent("token", "1", id);
       setEvent(result);
+      const attendance = await getAttendence("token", "1", id);
+      console.log("result is ", attendance);
+      setTicketed(attendance.attendance);
     }
     if (! event) {
       getData();
@@ -43,7 +48,7 @@ export default function Eventpage({ navigation, route }) {
             <Text style={styles.bio}>Location:</Text>
             <Text style={styles.detail}>{event.venue}</Text>
             <View style={styles.buttonContainer}>
-                <BlackButton onPress={() => handleJoin(navigation, ticketed, setTicketed, id)} text="Join" borderRadius={2} />
+              <BlackButton onPress={() => handleJoin(navigation, ticketed, setTicketed, id)} text={ticketed ? "Already Joined" : "Join"} borderRadius={2} />
             </View>
           </ScrollView>
           </SafeAreaView>
@@ -59,12 +64,10 @@ export default function Eventpage({ navigation, route }) {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'gold',
       alignItems: 'center',
       justifyContent: 'center',
     },
     bottom: {
-        backgroundColor: 'silver',
         flex: 1, // Ensure it takes up the remaining space
         justifyContent: 'flex-end', // Push content to the bottom
     },
@@ -72,10 +75,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent:'center',
-        backgroundColor: "red"
     },
     showContainer: {
-        backgroundColor: "blue",
         flex: 1
     },
     profileContainer: {

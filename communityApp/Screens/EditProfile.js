@@ -115,12 +115,10 @@ const EditProfileScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'gold',
     alignItems: 'center',
     justifyContent: 'center',
   },
   bottom: {
-      backgroundColor: 'silver',
       flex: 1, // Ensure it takes up the remaining space
       justifyContent: 'flex-end', // Push content to the bottom
   },
@@ -129,10 +127,8 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent:'center',
-      backgroundColor: "red"
   },
   showContainer: {
-      backgroundColor: "blue",
       flex: 1
   },
   title: {
@@ -148,7 +144,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#007BFF',
     padding: 10,
     width: 300,
     alignItems: 'center',

@@ -1,5 +1,5 @@
 //API
-export const BASE_URL = 'http://192.168.20.104:8001/api';
+export const BASE_URL = 'http://45.63.26.83:8001/api';
 export const API_KEY = 'api_key';
 
 //Account entity
@@ -38,4 +38,4 @@ export const INTEREST_TYPE_NAME = 'InterestType';
 export const INTEREST_TYPE_FETCH_URL = 'fetch';
 
 //Event attendance entity
-export const EVENT_TICKET = 'event_ticket';
+export const EVENT_ATTENDANCE_URL = 'attendance';
