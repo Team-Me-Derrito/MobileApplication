@@ -39,35 +39,27 @@ const SignupScreen = ({navigation}) => {
       setCommunityAvailable(parsedCommunities);
       setInterestTypesAvailable(parsedInterestTypes);
     }
-    const data1 = [
-      {key:1, value:'Mobiles'},
-      {key:2, value:'Appliances'},
-      {key:3, value:'Cameras'},
-      {key:4, value:'Computers'},
-      {key:5, value:'Vegetables'},
-      {key:6, value:'Diary Products'},
-      {key:7, value:'Drinks'},
-    ]
 
-    const data2 = [
-      {key:'1', value:'Mobiles'},
-      {key:'2', value:'Appliances'},
-      {key:'3', value:'Cameras'},
-      {key:'4', value:'Computers'},
-      {key:'5', value:'Vegetables'},
-      {key:'6', value:'Diary Products'},
-      {key:'7', value:'Drinks'},
-    ]
     fetchData();
-    // setCommunityAvailable(data1);
-    // setInterestTypesAvailable(data2);
   }, []); 
 
+  /**
+   * Parses the json response containing community info from the server to be displayed in the select list form
+   * 
+   * @param {*} json - Json response from the server
+   * @returns Parsed list of community information
+   */
   function parseCommunityData(json) {
     const communities = json.communities;
     return communities.map(community => ({key: community.community_id, value: community.community_name}));
   }
 
+  /**
+   * Parses the json response containing interest types info from the server to be displayed in the select list form
+   * 
+   * @param {*} json - Json response from the server
+   * @returns Parsed list of interest types information
+   */
   function parseInterestsData(json) {
     const interestTypes = json.interests;
     return interestTypes.map(interest => ({key: interest.interest_id, value: interest.interest}));
@@ -84,13 +76,15 @@ const SignupScreen = ({navigation}) => {
   };
 
   const handleConfirm = (date) => {
-    console.warn("A date has been picked: ", date);
     setBirthday(date);
     hideDatePicker();
   };
 
-
-
+  /**
+   * Validates user's inputs for signup process
+   * 
+   * @returns bool - if the inputs meet all criteria or not
+   */
   const validateInputs = () => {
     const nameErrorText = (name.length > 0) ? '' : NAME_EMPTY_ERROR;
     const birthdayErrorText = isValidBirthday(birthday) ? '' : BIRTHDAY_INVALID_ERROR;
@@ -119,15 +113,28 @@ const SignupScreen = ({navigation}) => {
     return allCriteriaMet;
   };
 
-  const handleSignup = () => {
-    if (validateInputs()) createAccount(communitySelected,
+  /**
+   * handles signup process. 
+   * It sends the request to the server to create a new account when the user inputs match the criteria.
+   * When the account creation is successful, it navigates to the homepage.
+   */
+  async function handleSignup() {
+    if (validateInputs()) {
+      const response = await createAccount(communitySelected,
       name, 
       interestTypesSelected, 
       birthday, 
       genderSelected, 
       number, 
       email, 
-      password);    
+      password); 
+
+      console.log(JSON.stringify(response));
+  
+      if (response.success) {
+        navigation.navigate('Homepage');
+      }
+    } 
 };
 
   return (
