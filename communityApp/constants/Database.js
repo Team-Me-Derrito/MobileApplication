@@ -15,6 +15,7 @@ export const SALT = 'Salt';
 export const TOKEN = 'token';
 export const FETCH = 'fetch';
 export const CREATE = 'create';
+export const MESSAGE = 'message';
 
 //Event entity
 export const EVENT_ID = 'event_id';
@@ -24,6 +25,12 @@ export const SEARCH = 'search';
 export const ALL = 'all';
 export const COMMUNITY = 'community';
 export const QUERY = 'query';
+export const TITLE = 'name';
+export const DESCRIPTION = 'description';
+export const PRICE = 'price';
+export const DURATION = 'duration';
+export const START_DATE = 'startDateTime';
+export const VENUE = 'venue'
 
 //Community entity
 export const POSTS = 'posts'

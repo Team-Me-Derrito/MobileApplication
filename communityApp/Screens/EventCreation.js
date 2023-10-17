@@ -5,13 +5,14 @@ import Header from './Components/Header';
 import Footer from './Components/Footer';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { SimpleLineIcons } from '@expo/vector-icons';
+import { createEvent } from '../API/Events';
 
 const EventCreationScreen = ({navigation}) => {
   const [title, setTitle] = useState('');
   const [description, setDesc] = useState('');
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState('');
-  const [tags, setTags] = useState('');
+  const [location, setLocation] = useState('');
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -24,14 +25,15 @@ const EventCreationScreen = ({navigation}) => {
   };
 
   const handleConfirm = (date) => {
-    console.warn("A date has been picked: ", date);
+    console.log("A date has been picked: ", date);
     setDate(date);
     hideDatePicker();
   };
 
-  const handleEventCreation = () => {
+  async function handleEventCreation(){
     //Sign up logic to be updated
     console.log('title:', title);
+    result = await createEvent(1, 1, title, description, 0, 4, date, location);
     navigation.navigate('Homepage');
   };
 
@@ -68,7 +70,7 @@ const EventCreationScreen = ({navigation}) => {
             </View>
             <DateTimePickerModal
               isVisible={isDatePickerVisible}
-              mode="date"
+              mode="datetime"
               onConfirm={handleConfirm}
               onCancel={hideDatePicker}
               textColor="#000"
@@ -81,9 +83,9 @@ const EventCreationScreen = ({navigation}) => {
             />
             <TextInput
               style={styles.input}
-              placeholder="Tags"
-              onChangeText={text => setTags(text)}
-              value={tags}
+              placeholder="Location"
+              onChangeText={text => setLocation(text)}
+              value={location}
             />
             <BlackButton onPress={handleEventCreation} text="Create" borderRadius={2} />
         </View>

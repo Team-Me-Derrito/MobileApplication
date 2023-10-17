@@ -1,4 +1,4 @@
-import { ACCOUNT_ID, TOKEN, POSTS } from '../constants/Database.js';
+import { ACCOUNT_ID, TOKEN, POSTS, CREATE } from '../constants/Database.js';
 import { postRequest } from './BaseRequest.js';
 
 
@@ -11,5 +11,6 @@ export async function getCommunityPosts(token, id) {
     };
 
     const endpoint = path + POSTS; // community/posts
+    console.log("End: ", endpoint)
     return await postRequest(endpoint, message);
 }

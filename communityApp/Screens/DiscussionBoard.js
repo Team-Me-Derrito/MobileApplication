@@ -6,43 +6,47 @@ import NiceToggle from "./Components/NiceToggle";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Comment from './Components/BoardComment'
-import { getAllEvents } from '../API/Events';
+import { getCommunityPosts } from '../API/Community';
+import { createPost } from '../API/Account'
 
 export default function DiscussionBoard() {
     const [message, setMessage] = useState('');
 
-    const handleMessage = () => {
-        //Sign up logic to be updated
-        console.log('Message:', message);
-        setMessage('')
-    };
-
-    const [events, setEvents] = useState([]);
+    const [posts, setPosts] = useState([]);
     useEffect(() => {
         async function getData() {
-            const result = await getAllEvents();
-            setEvents(result.events);
+            const result = await getCommunityPosts();
+            console.log("Results: ", result);
+            setPosts(result.posts);
         }
-        if (! events.length) {
+        if (! posts.length) {
             getData();
         }
         
-    }, []);
+    }, [posts]);
+
+    async function handleMessage(){
+        //Sign up logic to be updated
+        console.log('Message:', message);
+        result = await createPost(1, 1, message);
+        setMessage('');
+        setPosts([]);
+    };
 
     //Code goes here
     return (
         <View style={styles.showContainer}>
             <View>
                 <View style={styles.row}>
-                    <Header text="Events" />
+                    <Header text="Discussion Board" />
                 </View>
                 
             </View>
             <ScrollView>
             <View style={styles.container}>
                 <View>
-                    {events.map((event, index) => (
-                        <Comment name={event.eventName} text ={event.description} />
+                    {posts.map((post, index) => (
+                        <Comment name={post.accountName} text={post.text} />
                     ))}
                 </View>
             </View>
@@ -55,7 +59,7 @@ export default function DiscussionBoard() {
                     onChangeText={text => setMessage(text)}
                     value={message}
                 />
-                <BlackButton onPress={handleMessage} text="Send" borderRadius={2} width={80} />
+                <BlackButton onPress={() => handleMessage()} text="Send" borderRadius={2} width={80} />
                 </View>
             </View>
             <View style={styles.row}>

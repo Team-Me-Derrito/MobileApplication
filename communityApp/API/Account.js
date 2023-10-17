@@ -1,4 +1,4 @@
-import { ACCOUNT_ID, COMMUNITY_ID, NAME, GENDER, PHONE, EMAIL, PASSWORD, SALT, TOKEN, FETCH, CREATE, BIRTHDAY } from '../constants/Database.js';
+import { ACCOUNT_ID, COMMUNITY_ID, NAME, GENDER, PHONE, EMAIL, PASSWORD, SALT, TOKEN, FETCH, CREATE, BIRTHDAY, MESSAGE } from '../constants/Database.js';
 import { postRequest } from './BaseRequest.js';
 
 
@@ -27,5 +27,16 @@ export async function createAccount(communityId, name, birthday, gender, phone, 
     }
 
     const endpoint = path + CREATE; // accounts/create
+    return await postRequest(endpoint, message);
+}
+
+export async function createPost(token, id, text) {
+    const message = {
+        [ACCOUNT_ID]: id,
+        [TOKEN]: token,
+        [MESSAGE]: text
+    };
+
+    const endpoint = path + 'post'; // account/post
     return await postRequest(endpoint, message);
 }
