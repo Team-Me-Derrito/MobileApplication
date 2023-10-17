@@ -121,7 +121,7 @@ export async function setAttendence(token, id, ticketed, eventID) {
         [EVENT_ID]: eventID
     };
 
-    const endpoint = path + EVENT_ATTENDANCE_URL + "/set"; // /api/events/event_ticket
+    const endpoint = path + EVENT_ATTENDANCE_URL + "/set"; // /api/events/attendance/set
     console.log("url and message is", endpoint, message);
     return await postRequest(endpoint, message);
 }
@@ -141,6 +141,6 @@ export async function getAttendence(token, id, eventID) {
         [ACCOUNT_ID]: id,
         [EVENT_ID]: eventID
     };
-    const endpoint = path + EVENT_ATTENDANCE_URL + "/get"; // /api/events/event_ticket
+    const endpoint = path + EVENT_ATTENDANCE_URL + "/get"; // /api/events/attendance/get
     return await postRequest(endpoint, message);
 }
