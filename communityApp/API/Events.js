@@ -1,4 +1,4 @@
-import { ACCOUNT_ID, TOKEN, EVENT_RECOMMENDED_URL, EVENT_UPCOMING_URL, EVENT_SEARCH_URL, EVENT_ALL_URL, EVENT_COMMUNITY_URL, EVENT_QUERY_URL, EVENT_ID, EVENT_TICKET } from '../constants/Database';
+import { ACCOUNT_ID, TOKEN, EVENT_RECOMMENDED_URL, EVENT_UPCOMING_URL, EVENT_SEARCH_URL, EVENT_ALL_URL, EVENT_COMMUNITY_URL, EVENT_QUERY_URL, EVENT_ID, EVENT_ATTENDANCE_URL, EVENT_TICKET } from '../constants/Database';
 import { postRequest } from './BaseRequest';
 
 
@@ -117,10 +117,30 @@ export async function setAttendence(token, id, ticketed, eventID) {
     const message = {
         [TOKEN]: token,
         [ACCOUNT_ID]: id,
-        [EVENT_TICKET]: ticketed,
+        [EVENT_ATTENDANCE_URL]: ticketed,
         [EVENT_ID]: eventID
     };
 
-    const endpoint = path + EVENT_TICKET; // /api/events/event_ticket
+    const endpoint = path + EVENT_ATTENDANCE_URL + "/set"; // /api/events/attendance/set
+    console.log("url and message is", endpoint, message);
+    return await postRequest(endpoint, message);
+}
+
+
+/**
+ * Get the list of events with the search keywords
+ * 
+ * @param {string} token access token for the session
+ * @param {Number} id account ID
+ * @param {string} ticketed boolean for accounts attendence to event
+ * @returns Json object containing the list of corresponding events
+ */
+export async function getAttendence(token, id, eventID) {
+    const message = {
+        [TOKEN]: token,
+        [ACCOUNT_ID]: id,
+        [EVENT_ID]: eventID
+    };
+    const endpoint = path + EVENT_ATTENDANCE_URL + "/get"; // /api/events/attendance/get
     return await postRequest(endpoint, message);
 }

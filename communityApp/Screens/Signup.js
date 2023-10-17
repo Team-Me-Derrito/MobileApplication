@@ -303,7 +303,6 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 1,
-    backgroundColor: 'grey',
     marginBottom: 20,
   },
   input: {
@@ -315,7 +314,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#007BFF',
     padding: 10,
     width: 300,
     alignItems: 'center',

@@ -38,4 +38,4 @@ export const INTEREST_TYPE_NAME = 'InterestType';
 export const INTEREST_TYPE_FETCH_URL = 'fetch';
 
 //Event attendance entity
-export const EVENT_TICKET = 'event_ticket';
+export const EVENT_ATTENDANCE_URL = 'attendance';

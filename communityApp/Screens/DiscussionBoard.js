@@ -53,11 +53,9 @@ export default function DiscussionBoard() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'gold',
       alignItems: 'center',
     },
     bottom: {
-        backgroundColor: 'silver',
         flex: 1, // Ensure it takes up the remaining space
         justifyContent: 'flex-end', // Push content to the bottom
     },
@@ -65,12 +63,10 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         justifyContent:'center',
-        backgroundColor: "red",
         justifyContent: 'space-between',
         paddingHorizontal: 10,
     },
     showContainer: {
-        backgroundColor: "blue",
         flex: 1
     },
     input: {
@@ -80,7 +76,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'gray',
         marginBottom: 20,
-        backgroundColor: 'white',
     },
 });
   
