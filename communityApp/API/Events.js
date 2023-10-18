@@ -1,4 +1,4 @@
-import { ACCOUNT_ID, TOKEN, EVENT_RECOMMENDED_URL, EVENT_UPCOMING_URL, EVENT_SEARCH_URL, EVENT_ALL_URL, EVENT_COMMUNITY_URL, EVENT_QUERY_URL, EVENT_ID, EVENT_ATTENDANCE_URL, EVENT_TICKET, DESCRIPTION, PRICE, DURATION, TITLE, START_DATE, VENUE, CREATE, PROJECT_ID, INTEREST_ID } from '../constants/Database';
+import { ACCOUNT_ID, TOKEN, EVENT_RECOMMENDED_URL, EVENT_UPCOMING_URL, EVENT_SEARCH_URL, EVENT_ALL_URL, EVENT_COMMUNITY_URL, EVENT_QUERY_URL, EVENT_ID, EVENT_ATTENDANCE_URL, EVENT_TICKET, DESCRIPTION, PRICE, DURATION, TITLE, START_DATE, VENUE, CREATE, PROJECT_ID, INTEREST_ID, EVENT_DELETE_URL } from '../constants/Database';
 import { postRequest } from './BaseRequest';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -276,5 +276,23 @@ export async function getAttendence(eventID) {
         [EVENT_ID]: eventID
     };
     const endpoint = path + EVENT_ATTENDANCE_URL + "/get"; // /api/events/attendance/get
+    return await postRequest(endpoint, message);
+}
+
+/**
+ * Get the list of events with the search keywords
+ * 
+ * @param {string} token access token for the session
+ * @param {Number} id account ID
+ * @param {string} eventID id of the event
+ * @returns Json object containing the list of corresponding events
+ */
+export async function deleteEvent(account_id, token, eventID) {
+    const message = {
+        [TOKEN]: token,
+        [ACCOUNT_ID]: account_id,
+        [EVENT_ID]: eventID
+    };
+    const endpoint = path + EVENT_DELETE_URL; // /api/events/delete
     return await postRequest(endpoint, message);
 }
