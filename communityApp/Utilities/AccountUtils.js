@@ -18,7 +18,7 @@ export function isValidEmail(email) {
  */
 export function isValidPhone(phone) {
     //Checks if the phone number consists of 10 digits numbers
-    return /^[1-9][0-9]{9}$/.test(phone);
+    return /^[0-9]{1,10}$/.test(phone);
 }
   
 /**

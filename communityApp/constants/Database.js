@@ -25,6 +25,16 @@ export const EVENT_SEARCH_URL = 'search';
 export const EVENT_ALL_URL = 'all';
 export const EVENT_COMMUNITY_URL = 'community';
 export const EVENT_QUERY_URL = 'query';
+export const TITLE = 'name';
+export const DESCRIPTION = 'description';
+export const PRICE = 'price';
+export const DURATION = 'duration';
+export const START_DATE = 'startDateTime';
+export const VENUE = 'venue_id';
+export const MESSAGE = 'message';
+export const CREATE = 'create';
+export const PROJECT_ID = 'project_id';
+export const INTEREST_ID = 'interest_id';
 
 //Community entity
 export const COMMUNITY_ID = 'community_id';
@@ -39,3 +49,6 @@ export const INTEREST_TYPE_FETCH_URL = 'fetch';
 
 //Event attendance entity
 export const EVENT_ATTENDANCE_URL = 'attendance';
+
+//Venue entity
+export const VENUE_TYPE_FETCH_URL = 'fetch';

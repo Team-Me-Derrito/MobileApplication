@@ -1,6 +1,7 @@
-import { ACCOUNT_ID, TOKEN, POSTS } from '../constants/Database.js';
+import { ACCOUNT_ID, TOKEN, POSTS, CREATE } from '../constants/Database.js';
 import { postRequest } from './BaseRequest.js';
 import { COMMUNITY_FETCH_URL } from "../constants/Database";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const path = 'community/';
 
@@ -26,12 +27,25 @@ export async function getCommunities() {
  * @param {*} id Account ID
  * @returns Json object containing the community posts
  */
-export async function getCommunityPosts(token, id) {
+export async function getCommunityPosts() {
+    account = "3";
+    token = "3";
+
+    try {
+        account = await AsyncStorage.getItem('account_id');
+        token = await AsyncStorage.getItem('token');
+    } catch (error) {
+        console.error('Error checking user token:', error);
+    }
+
+    accNum = parseInt(account);
+
     const message = {
-        [ACCOUNT_ID]: id,
-        [TOKEN]: token
+        [ACCOUNT_ID]: accNum,
+        [TOKEN]: token,
     };
 
     const endpoint = path + POSTS; // community/posts
+    console.log("End: ", endpoint)
     return await postRequest(endpoint, message);
 }
