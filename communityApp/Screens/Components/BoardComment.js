@@ -28,6 +28,7 @@ export default function EventBox({
                 borderWidth: borderRadius,
                 alignItems: "left",
                 padding: 10,
+                marginBottom: 7,
             },
             ]} >
             <Text style={{color: "black", fontWeight: "bold"}} >{name}</Text>

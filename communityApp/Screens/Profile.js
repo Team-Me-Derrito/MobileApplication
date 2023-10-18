@@ -6,39 +6,44 @@ import Footer from './Components/Footer';
 import EventBox from './Components/EventBox';
 import { Rating } from 'react-native-ratings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getAccount } from '../API/Account';
+import React, { useState, useEffect } from 'react';
 
 function test() {
     console.log('test');
 }
 
 export default function Profile({ navigation }) {
-  const name = 'John Smith';
-  const userRating = 4.5;
-  const occupation = 'Developer';
-  const email = 'bobdylan@gmail.com';
-  const birthday = 'May 9th, 2002';
-  const location = 'Indooroopilly, Qld';
-  const likes = 'Jogging, Hiking, Sports';
+  const [account, setAccount] = useState([]);
+  useEffect(() => {
+      async function getData() {
+          const result = await getAccount();
+          setAccount(result);
+      }
+      if (! account.length) {
+          getData();
+      }
+        
+  }, []);
 
-  async function checkUserToken() {
-    try {
-      const userToken = await AsyncStorage.getItem('userToken');
-      console.log(userToken);
-    } catch (error) {
-      console.error('Error checking user token:', error);
-    }
-  }
+  console.log('account', account);
+
+  const name = account.name;
+  const score = parseInt(account.score);
+  const number = account.phoneNumber;
+  const email = account.email;
+  const birthday = account.birthday;
+  const location = account.community;
 
   async function handleLogout() {
     try {
-      await AsyncStorage.removeItem('userToken');
+      await AsyncStorage.removeItem('token');
+      await AsyncStorage.removeItem('account_id');
     } catch (error) {
       console.error('Error removing user token:', error);
     }
     navigation.navigate('Login');
   }
-
-  checkUserToken();
 
   return (
     <View style={styles.showContainer}>
@@ -57,21 +62,11 @@ export default function Profile({ navigation }) {
               style={styles.profileImage}
             />
             <Text style={styles.name}>{name}</Text>
-            <Text style={styles.bio}>Rating:</Text>
-            <Rating
-              type="star"
-              ratingCount={5}
-              startingValue={userRating}
-              imageSize={30}
-              showRating={false} // Set to true to display the rating value
-              readonly={true}
-              tintColor="blue"
-            />
-            <Text style={styles.bio}>{occupation}</Text>
+            <Text style={styles.bio}>{number}</Text>
             <Text style={styles.bio}>{email}</Text>
+            <Text style={styles.detail}>Score: {score}</Text>
             <Text style={styles.detail}>Birthday: {birthday}</Text>
             <Text style={styles.detail}>Location: {location}</Text>
-            <Text style={styles.detail}>Likes: {likes}</Text>
             <View style={styles.buttonContainer}>
               <BlackButton onPress={() => navigation.navigate('EditProfile')} text="Edit Profile" borderRadius={2} />
               <BlackButton onPress={() => handleLogout()} text="Logout" borderRadius={2} />
@@ -116,7 +111,7 @@ const styles = StyleSheet.create({
   },
   profileImage: {
     width: 150,
-    height: 150,
+    height: 100,
     borderRadius: 75,
     marginBottom: 20,
   },

@@ -40,7 +40,7 @@ function handleJoin(navigation, ticketed, setTicketed, eventID, eventName, descr
   if (! state) {
     reminderNotification(eventName, description, eventDate, eventName);
   }
-  setAttendence("token", "1", ! state, eventID);
+  setAttendence(! state, eventID);
   setTicketed(! ticketed);
 }
 
@@ -50,10 +50,10 @@ export default function Eventpage({ navigation, route }) {
   const [ticketed, setTicketed] = useState(false);
   useEffect(() => {
     async function getData() {
-      const result = await getEvent("token", "1", id);
+      const result = await getEvent(id);
       console.log("event data is ", result);
       setEvent(result);
-      const attendance = await getAttendence("token", "1", id);
+      const attendance = await getAttendence(id);
       console.log("result is ", attendance);
       setTicketed(attendance.attendance);
     }

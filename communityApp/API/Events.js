@@ -1,6 +1,6 @@
-import { ACCOUNT_ID, TOKEN, EVENT_RECOMMENDED_URL, EVENT_UPCOMING_URL, EVENT_SEARCH_URL, EVENT_ALL_URL, EVENT_COMMUNITY_URL, EVENT_QUERY_URL, EVENT_ID, EVENT_ATTENDANCE_URL, EVENT_TICKET } from '../constants/Database';
+import { ACCOUNT_ID, TOKEN, EVENT_RECOMMENDED_URL, EVENT_UPCOMING_URL, EVENT_SEARCH_URL, EVENT_ALL_URL, EVENT_COMMUNITY_URL, EVENT_QUERY_URL, EVENT_ID, EVENT_ATTENDANCE_URL, EVENT_TICKET, DESCRIPTION, PRICE, DURATION, TITLE, START_DATE, VENUE, CREATE, PROJECT_ID, INTEREST_ID } from '../constants/Database';
 import { postRequest } from './BaseRequest';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const path = 'events/';
 
@@ -11,21 +11,47 @@ const path = 'events/';
  * @param {Number} id account ID
  * @returns Json object containing the list of the recommended events
  */
-export async function getRecommended(token, id) {
+export async function getRecommended() {
+
+    account = "3";
+    token = "3";
+
+    try {
+        account = await AsyncStorage.getItem('account_id');
+        token = await AsyncStorage.getItem('token');
+    } catch (error) {
+        console.error('Error checking user token:', error);
+    }
+
+    accNum = parseInt(account);
+
     const message = {
         [TOKEN]: token,
-        [ACCOUNT_ID]: id
+        [ACCOUNT_ID]: accNum,
     };
 
     const endpoint = path + EVENT_RECOMMENDED_URL; // events/recommended
     return await postRequest(endpoint, message);
 }
 
-export async function getEvent(token, id, eventID) {
-    console.log(token, id, eventID);
+export async function getEvent(eventID) {
+
+    account = "3";
+    token = "3";
+
+    try {
+        account = await AsyncStorage.getItem('account_id');
+        token = await AsyncStorage.getItem('token');
+    } catch (error) {
+        console.error('Error checking user token:', error);
+    }
+
+    accNum = parseInt(account);
+
+    console.log(eventID);
     const message = {
         [TOKEN]: token,
-        [ACCOUNT_ID]: id,
+        [ACCOUNT_ID]: accNum,
         [EVENT_ID]: eventID
     };
 
@@ -40,10 +66,23 @@ export async function getEvent(token, id, eventID) {
  * @param {Number} id account ID
  * @returns Json object containing the list of all events
  */
-export async function getAllEvents(token, id) {
+export async function getAllEvents() {
+
+    account = "3";
+    token = "3";
+
+    try {
+        account = await AsyncStorage.getItem('account_id');
+        token = await AsyncStorage.getItem('token');
+    } catch (error) {
+        console.error('Error checking user token:', error);
+    }
+
+    accNum = parseInt(account);
+
     const message = {
         [TOKEN]: token,
-        [ACCOUNT_ID]: id
+        [ACCOUNT_ID]: accNum,
     };
 
     const endpoint = path + EVENT_ALL_URL; // events/all
@@ -58,10 +97,23 @@ export async function getAllEvents(token, id) {
  * @param {Number} id account ID
  * @returns Json object containing the list of upcoming events
  */
-export async function getUpcoming(token, id) {
+export async function getUpcoming() {
+
+    account = "3";
+    token = "3";
+
+    try {
+        account = await AsyncStorage.getItem('account_id');
+        token = await AsyncStorage.getItem('token');
+    } catch (error) {
+        console.error('Error checking user token:', error);
+    }
+
+    accNum = parseInt(account);
+
     const message = {
         [TOKEN]: token,
-        [ACCOUNT_ID]: id
+        [ACCOUNT_ID]: accNum,
     };
 
     const endpoint = path + EVENT_UPCOMING_URL; // events/upcoming
@@ -76,10 +128,23 @@ export async function getUpcoming(token, id) {
  * @param {string} search keyword for the search
  * @returns Json object containing the list of corresponding events
  */
-export async function searchEvents(token, id, search) {
+export async function searchEvents(search) {
+
+    account = "3";
+    token = "3";
+
+    try {
+        account = await AsyncStorage.getItem('account_id');
+        token = await AsyncStorage.getItem('token');
+    } catch (error) {
+        console.error('Error checking user token:', error);
+    }
+
+    accNum = parseInt(account);
+
     const message = {
         [TOKEN]: token,
-        [ACCOUNT_ID]: id,
+        [ACCOUNT_ID]: accNum,
         [QUERY]: search
     };
 
@@ -94,16 +159,59 @@ export async function searchEvents(token, id, search) {
  * @param {*} id account ID
  * @returns Json object containing the list of corresponding events
  */
-export async function getCommunityEvents(token, id) {
+export async function getCommunityEvents() {
+
+    account = "3";
+    token = "3";
+
+    try {
+        account = await AsyncStorage.getItem('account_id');
+        token = await AsyncStorage.getItem('token');
+    } catch (error) {
+        console.error('Error checking user token:', error);
+    }
+
+    accNum = parseInt(account);
+    
     const message = {
         [TOKEN]: token,
-        [ACCOUNT_ID]: id
+        [ACCOUNT_ID]: accNum,
     };
 
     const endpoint = path + EVENT_COMMUNITY_URL; // events/community
     return await postRequest(endpoint, message);
 }
 
+export async function createEvent(name, description, price, duration, date, location, interest_id) {
+
+    account = "3";
+    token = "3";
+
+    try {
+        account = await AsyncStorage.getItem('account_id');
+        token = await AsyncStorage.getItem('token');
+    } catch (error) {
+        console.error('Error checking user token:', error);
+    }
+
+    accNum = parseInt(account);
+
+    const message = {
+        [TOKEN]: token,
+        [ACCOUNT_ID]: accNum,
+        [TITLE]: name,
+        [DESCRIPTION]: description,
+        [PRICE]: price,
+        [DURATION]: duration,
+        [START_DATE]: date,
+        [VENUE]: location,
+        [PROJECT_ID]: 1,
+        [INTEREST_ID]: interest_id,
+    };
+
+    const endpoint = path + CREATE; // events/create
+    return await postRequest(endpoint, message);
+}
 
 /**
  * Get the list of events with the search keywords
@@ -113,10 +221,23 @@ export async function getCommunityEvents(token, id) {
  * @param {string} ticketed boolean for accounts attendence to event
  * @returns Json object containing the list of corresponding events
  */
-export async function setAttendence(token, id, ticketed, eventID) {
+export async function setAttendence(ticketed, eventID) {
+
+    account = "3";
+    token = "3";
+
+    try {
+        account = await AsyncStorage.getItem('account_id');
+        token = await AsyncStorage.getItem('token');
+    } catch (error) {
+        console.error('Error checking user token:', error);
+    }
+
+    accNum = parseInt(account);
+
     const message = {
         [TOKEN]: token,
-        [ACCOUNT_ID]: id,
+        [ACCOUNT_ID]: accNum,
         [EVENT_ATTENDANCE_URL]: ticketed,
         [EVENT_ID]: eventID
     };
@@ -135,10 +256,23 @@ export async function setAttendence(token, id, ticketed, eventID) {
  * @param {string} ticketed boolean for accounts attendence to event
  * @returns Json object containing the list of corresponding events
  */
-export async function getAttendence(token, id, eventID) {
+export async function getAttendence(eventID) {
+
+    account = "3";
+    token = "3";
+
+    try {
+        account = await AsyncStorage.getItem('account_id');
+        token = await AsyncStorage.getItem('token');
+    } catch (error) {
+        console.error('Error checking user token:', error);
+    }
+
+    accNum = parseInt(account);
+
     const message = {
         [TOKEN]: token,
-        [ACCOUNT_ID]: id,
+        [ACCOUNT_ID]: accNum,
         [EVENT_ID]: eventID
     };
     const endpoint = path + EVENT_ATTENDANCE_URL + "/get"; // /api/events/attendance/get
