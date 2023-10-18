@@ -57,11 +57,12 @@ export async function attemptLogin(email, password) {
  * @returns Json object to tell if the creation went successfully
  */
 export async function createAccount(communityId, name, interestTypes, birthday, gender, phone, email, password) {
+    const birthdayFormatted = birthday.toISOString().split('T')[0];
     const message = {
         [COMMUNITY_ID]: communityId,
         [ACCOUNT_NAME]: name,
         [INTEREST_TYPES_SELECTED]: interestTypes,
-        [BIRTHDAY]: birthday,
+        [BIRTHDAY]: birthdayFormatted,
         [GENDER]: gender,
         [PHONE]: phone,
         [EMAIL]: email,
