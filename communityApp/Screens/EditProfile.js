@@ -24,16 +24,12 @@ const EditProfileScreen = ({navigation}) => {
   const [interestTypesSelected, setInterestTypesSelected] = useState([]);
   const [genderSelected, setGenderSelected] = useState('');
   const [validationErrors, setValidationErrors] = useState(VALIDATION_ERRORS);
-
-  // Some states that will be updated when the page is loaded.
   const [communityAvailable, setCommunityAvailable] = useState([]);
   const [interestTypesAvailable, setInterestTypesAvailable] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = '5x6fqCxku0jhINhQYpAyuxEIDitf9Xf6s2BJQ2js';
-      const id = 2;
-      const accountInfo = await getAccount(token, id);
+      const accountInfo = await getAccount();
       console.log(`Account Info from server: ${JSON.stringify(accountInfo)}`);
       const communitiesJson = await getCommunities();
       const interestTypesJson = await getInterestTypes();
