@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button} from 'react-native';
+import { BIRTHDAY_INVALID_ERROR, COMMUNITY_UNSELECTED_ERROR, GENDER_UNSELECTED_ERROR, EMAIL_INVALID_ERROR, NAME_EMPTY_ERROR, PASSWORD_INCONSISTENT_ERROR, PASSWORD_WEAK_ERROR, PHONE_INVALID_ERROR, VALIDATION_ERRORS } from '../constants/SignupConst';
+import React, { useState, useEffect } from 'react';
+import { View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet, Button} from 'react-native';
 import BlackButton from "./Components/BlackButton";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { SimpleLineIcons } from '@expo/vector-icons';
+import { createAccount } from '../API/Account';
+import { getInterestTypes } from '../API/Interest';
+import { getCommunities } from '../API/Community';
+import { SelectList, MultipleSelectList } from 'react-native-dropdown-select-list';
+import { isValidEmail, isValidPhone, isStrongPassword, isPasswordConsistent, isValidBirthday } from '../Utilities/AccountUtils';
 
 const SignupScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -12,39 +18,59 @@ const SignupScreen = ({navigation}) => {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const [likes, setLikes] = useState('');
   const [birthday, setBirthday] = useState(new Date());
+  const [communitySelected, setCommunitySelected] = useState(null);
+  const [interestTypesSelected, setInterestTypesSelected] = useState([]);
+  const [genderSelected, setGenderSelected] = useState('');
+  const [validationErrors, setValidationErrors] = useState(VALIDATION_ERRORS);
 
-  const handleSignup = () => {
-    if (!validateEmail(email)) {
-      console.log(`Invalid email: ${email}`);
+  // Some states that will be updated when the page is loaded.
+  const [communityAvailable, setCommunityAvailable] = useState([]);
+  const [interestTypesAvailable, setInterestTypesAvailable] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const communitiesJson = await getCommunities();
+      const interestTypesJson = await getInterestTypes();
+
+      const parsedCommunities = parseCommunityData(communitiesJson);
+      const parsedInterestTypes = parseInterestsData(interestTypesJson);
+
+      setCommunityAvailable(parsedCommunities);
+      setInterestTypesAvailable(parsedInterestTypes);
     }
+    const data1 = [
+      {key:1, value:'Mobiles'},
+      {key:2, value:'Appliances'},
+      {key:3, value:'Cameras'},
+      {key:4, value:'Computers'},
+      {key:5, value:'Vegetables'},
+      {key:6, value:'Diary Products'},
+      {key:7, value:'Drinks'},
+    ]
 
-    if (!validatePhone(number)) {
-      console.log(`Invalid phone: ${number}`);
-    }
-    if (!validatePassword(password, passwordConfirm)) {
-      console.log(`Passwords do not match: ${password} and ${passwordConfirm}`);
-    }
-    console.log('Email:', email);
-    console.log('Birthday:', birthday);
-    
-    navigation.navigate('Login');
-  };
+    const data2 = [
+      {key:'1', value:'Mobiles'},
+      {key:'2', value:'Appliances'},
+      {key:'3', value:'Cameras'},
+      {key:'4', value:'Computers'},
+      {key:'5', value:'Vegetables'},
+      {key:'6', value:'Diary Products'},
+      {key:'7', value:'Drinks'},
+    ]
+    fetchData();
+    // setCommunityAvailable(data1);
+    // setInterestTypesAvailable(data2);
+  }, []); 
 
-  const validateEmail = (email) => {
-    // Regular expression for email validation
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return regex.test(email);
-  };
+  function parseCommunityData(json) {
+    const communities = json.communities;
+    return communities.map(community => ({key: community.community_id, value: community.community_name}));
+  }
 
-  const validatePhone = (phone) => {
-    //Checks if the phone number consists of 10 digits numbers
-    return /^[1-9][0-9]{9}$/.test(phone);
-  };
-  
-  const validatePassword = (password, passwordConfirm) => {
-    return ((password.length !== 0) && (password === passwordConfirm));
+  function parseInterestsData(json) {
+    const interestTypes = json.interests;
+    return interestTypes.map(interest => ({key: interest.interest_id, value: interest.interest}));
   }
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -63,84 +89,180 @@ const SignupScreen = ({navigation}) => {
     hideDatePicker();
   };
 
+
+
+  const validateInputs = () => {
+    const nameErrorText = (name.length > 0) ? '' : NAME_EMPTY_ERROR;
+    const birthdayErrorText = isValidBirthday(birthday) ? '' : BIRTHDAY_INVALID_ERROR;
+    const communityErrorText = communitySelected ? '' : COMMUNITY_UNSELECTED_ERROR;
+    const genderErrorText = genderSelected ? '' : GENDER_UNSELECTED_ERROR;
+    const phoneErrorText = isValidPhone(number) ? '' : PHONE_INVALID_ERROR;
+    const emailErrorText = isValidEmail(email) ? '' : EMAIL_INVALID_ERROR;
+    const passwordErrorText = isStrongPassword(password) ? '' : PASSWORD_WEAK_ERROR;
+    const passwordConfirmErrorText = isPasswordConsistent(password, passwordConfirm) ? '' : PASSWORD_INCONSISTENT_ERROR;
+
+
+    const validationErrorsUpdated = {
+      nameError: nameErrorText,
+      birthDayError: birthdayErrorText,
+      communityError: communityErrorText,  
+      genderError: genderErrorText,  
+      phoneError: phoneErrorText, 
+      emailError: emailErrorText,
+      passwordError: passwordErrorText,
+      passwordConfirmError: passwordConfirmErrorText
+    }
+
+    setValidationErrors(validationErrorsUpdated);
+
+    const allCriteriaMet = Object.values(validationErrorsUpdated).every(errorText => errorText === '');
+    return allCriteriaMet;
+  };
+
+  const handleSignup = () => {
+    if (validateInputs()) createAccount(communitySelected,
+      name, 
+      interestTypesSelected, 
+      birthday, 
+      genderSelected, 
+      number, 
+      email, 
+      password);    
+};
+
   return (
     
   <View style={styles.showContainer}>
+
     <View>
         <View style={styles.row}>
-        </View>
-        
+        </View>    
     </View>
-      <View style={styles.container}>
-        <View>
-          <View style={styles.container}>
-            <Text style = {styles.title}>Signup</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Name"
-              onChangeText={text => setName(text)}
-              value={name}
-            />
-            <Text>Birthday:</Text>
-            <View style={styles.dateContainer}>
-              <Button title={birthday.toLocaleDateString()} onPress={showDatePicker} color='black'/>
-              <SimpleLineIcons name="event" size={24} color="black" onPress={showDatePicker}/>
-            </View>
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-              textColor="#000"
-            />
-            <TextInput
-              style={styles.inputLikes}
-              multiline={true}
-              placeholder="Likes"
-              onChangeText={text => setLikes(text)}
-              value={likes}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Phone Number"
-              onChangeText={text => setNumber(text)}
-              keyboardType="numeric"
-              value={number}
-              maxLength={10}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              onChangeText={text => setEmail(text)}
-              value={email}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              secureTextEntry
-              onChangeText={text => setPassword(text)}
-              value={password}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Confirm Password"
-              secureTextEntry
-              onChangeText={text => setPasswordConfirm(text)}
-              value={passwordConfirm}
-            />
-            <BlackButton onPress={handleSignup} text="Create" borderRadius={2} />
+    
+    <View style={styles.container}>
+      <View stye={styles.topContainer}>
+        <Text style={styles.title}>Signup</Text>
+        <View style={styles.separator}/>
+      </View>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+
+        <TextInput
+          style={styles.input}
+          placeholder="Name"
+          onChangeText={text => setName(text)}
+          value={name}
+        />
+        <Text style={styles.errorText}>{validationErrors.nameError}</Text>
+
+        <Text>Birthday:</Text>
+        <View style={styles.dateContainer}>
+          <Button title={birthday.toLocaleDateString()} onPress={showDatePicker} color='black'/>
+          <SimpleLineIcons name="event" size={24} color="black" onPress={showDatePicker}/>
+        </View>
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+          textColor="#000"
+          maximumDate={new Date()} //Input is no later than the current date
+        />
+        <Text style={styles.errorText}>{validationErrors.birthDayError}</Text>
+        
+        <View style={{width:'90%'}}>
+          <Text>Community:</Text>
+          <SelectList 
+            setSelected={(val) => setCommunitySelected(val)} 
+            data={communityAvailable} 
+            save="key"
+          />
+        </View>
+        <Text style={styles.errorText}>{validationErrors.communityError}</Text>
+
+        <View style={{width:'90%'}}>
+          <Text>Interests:</Text>
+          <MultipleSelectList 
+            setSelected={(val) => setInterestTypesSelected(val)} 
+            data={interestTypesAvailable} 
+            save="key"
+            label="Your Interest" 
+          />  
+        </View>
+
+        <View style={{width:'90%'}}>
+          <Text>Gender:</Text>
+          <SelectList 
+            setSelected={(val) => setGenderSelected(val)} 
+            data={
+              [
+                {key: 1, value: 'Male'},
+                {key: 2, value: 'Female'},
+                {key: 3, value: 'Other'},
+                {key:4, value: 'Prefer not to say'}
+              ]
+            } 
+            save="value"
+            label="Your gender" 
+          />  
+        </View>
+        <Text style={styles.errorText}>{validationErrors.genderError}</Text>
+
+        <TextInput
+          style={styles.input}
+          placeholder="Phone Number"
+          onChangeText={text => setNumber(text)}
+          keyboardType="numeric"
+          value={number}
+          maxLength={10}
+        />
+        <Text style={styles.errorText}>{validationErrors.phoneError}</Text>
+
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          onChangeText={text => setEmail(text)}
+          value={email}
+        />
+        <Text style={styles.errorText}>{validationErrors.emailError}</Text>
+
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry
+          onChangeText={text => setPassword(text)}
+          value={password}
+        />
+        <Text style={styles.errorText}>{validationErrors.passwordError}</Text>
+
+        <TextInput
+          style={styles.input}
+          placeholder="Confirm Password"
+          secureTextEntry
+          onChangeText={text => setPasswordConfirm(text)}
+          value={passwordConfirm}
+        />
+        <Text style={styles.errorText}>{validationErrors.passwordConfirmError}</Text>
+
+      </ScrollView>
+
+      <View style={styles.bottomContainer}>
+        <View style={styles.buttonContainer}>
+          <BlackButton onPress={handleSignup} text="Create" borderRadius={2} />
         </View>
 
         <View style={styles.bottomTextContainer}>
-        <Text style={styles.bottomText}>Already signed up?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.hyperlinkText}>Login</Text>
-        </TouchableOpacity>
-      </View>      
+
+          <Text style={styles.bottomText}>Already signed up?</Text>
+
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.hyperlinkText}>Login</Text>
+          </TouchableOpacity>
+
+        </View>   
       </View>
+
     </View>
-    <View style={styles.row}>
-    </View>
+
   </View>
   );
 };
@@ -150,6 +272,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  topContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   bottom: {
       flex: 1, // Ensure it takes up the remaining space
@@ -167,6 +299,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     marginBottom: 20,
+    marginTop: 20,
+  },
+  separator: {
+    height: 1,
+    marginBottom: 20,
   },
   input: {
     width: 300,
@@ -177,7 +314,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#007BFF',
     padding: 10,
     width: 300,
     alignItems: 'center',
@@ -199,9 +335,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  bottomContainer: {
+    justifyContent: 'flex-end',
+  },
+  buttonContainer: {
+    marginBottom: 40,
+  },
   bottomTextContainer: {
     flexDirection: 'row',
-    position: 'absolute',
     bottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
@@ -215,7 +356,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: 'blue',
   },
-
+  errorText: {
+    color: 'red',
+    marginBottom: 10,
+  },
 });
 
 export default SignupScreen;

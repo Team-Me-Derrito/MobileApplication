@@ -1,27 +1,41 @@
 import { StyleSheet, Text, View, Pressable, SafeAreaView, Button, Switch, ScrollView} from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import BlackButton from "./Components/BlackButton";
 import NiceToggle from "./Components/NiceToggle";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
+import { getEvent, setAttendence, getAttendence } from '../API/Events';
 
-function test() {
-    console.log('Button Pressed!');
+
+function handleJoin(navigation, ticketed, setTicketed, eventID) {
+  const state = ticketed; //Possible race condition with setting then sending
+  console.log("sending", ! state, state);
+  setAttendence("token", "1", ! state, eventID);
+  setTicketed(! ticketed);
 }
+
 export default function Eventpage({ navigation, route }) {
-
-  const {title, text, location} = route.params;
-
-  function handleJoin() {
-    navigation.navigate('Homepage');
-  }
-
+  const id = route.params;
+  const [event, setEvent] = useState("");
+  const [ticketed, setTicketed] = useState(false);
+  useEffect(() => {
+    async function getData() {
+      const result = await getEvent("token", "1", id);
+      setEvent(result);
+      const attendance = await getAttendence("token", "1", id);
+      console.log("result is ", attendance);
+      setTicketed(attendance.attendance);
+    }
+    if (! event) {
+      getData();
+    }
+  }, []);
   return (
     <View style={styles.showContainer}>
       <View>
         <View style={styles.row}>
-          <Header text={title} />
+          <Header text={event.eventName} />
         </View>   
       </View>
 
@@ -30,11 +44,11 @@ export default function Eventpage({ navigation, route }) {
           <SafeAreaView style={styles.container}>
           <ScrollView contentContainerStyle={styles.profileContainer}>
             <Text style={styles.bio}>Description:</Text>
-            <Text style={styles.detail}>{text}</Text>
+            <Text style={styles.detail}>{event.description}</Text>
             <Text style={styles.bio}>Location:</Text>
-            <Text style={styles.detail}>{location}</Text>
+            <Text style={styles.detail}>{event.venue}</Text>
             <View style={styles.buttonContainer}>
-                <BlackButton onPress={() => handleJoin()} text="Join" borderRadius={2} />
+              <BlackButton onPress={() => handleJoin(navigation, ticketed, setTicketed, id)} text={ticketed ? "Already Joined" : "Join"} borderRadius={2} />
             </View>
           </ScrollView>
           </SafeAreaView>
@@ -50,12 +64,10 @@ export default function Eventpage({ navigation, route }) {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'gold',
       alignItems: 'center',
       justifyContent: 'center',
     },
     bottom: {
-        backgroundColor: 'silver',
         flex: 1, // Ensure it takes up the remaining space
         justifyContent: 'flex-end', // Push content to the bottom
     },
@@ -63,10 +75,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent:'center',
-        backgroundColor: "red"
     },
     showContainer: {
-        backgroundColor: "blue",
         flex: 1
     },
     profileContainer: {

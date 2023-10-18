@@ -11,6 +11,7 @@ import { createPost } from '../API/Account'
 
 export default function DiscussionBoard() {
     const [message, setMessage] = useState('');
+    const [change, setChange] = useState('');
 
     const [posts, setPosts] = useState([]);
     useEffect(() => {
@@ -23,14 +24,15 @@ export default function DiscussionBoard() {
             getData();
         }
         
-    }, [posts]);
+    }, [change]);
 
     async function handleMessage(){
         //Sign up logic to be updated
         console.log('Message:', message);
-        result = await createPost(1, 1, message);
+        result = await createPost('token', 1, message);
         setMessage('');
         setPosts([]);
+        setChange(message);
     };
 
     //Code goes here
@@ -73,11 +75,9 @@ export default function DiscussionBoard() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'gold',
       alignItems: 'center',
     },
     bottom: {
-        backgroundColor: 'silver',
         flex: 1, // Ensure it takes up the remaining space
         justifyContent: 'flex-end', // Push content to the bottom
     },
@@ -85,13 +85,11 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         justifyContent:'center',
-        backgroundColor: "red",
         justifyContent: 'space-between',
         paddingHorizontal: 10,
         marginTop: 7
     },
     showContainer: {
-        backgroundColor: "blue",
         flex: 1
     },
     input: {
@@ -101,7 +99,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'gray',
         marginBottom: 20,
-        backgroundColor: 'white',
     },
 });
   

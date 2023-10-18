@@ -33,7 +33,8 @@ const EventCreationScreen = ({navigation}) => {
   async function handleEventCreation(){
     //Sign up logic to be updated
     console.log('title:', title);
-    result = await createEvent(1, 1, title, description, 0, 4, date, location);
+    const dateFormatted = date.toISOString().split('T')[0];
+    result = await createEvent('token', 1, title, description, 0, 4, dateFormatted, 1, 1, 1);
     navigation.navigate('Homepage');
   };
 
@@ -87,7 +88,7 @@ const EventCreationScreen = ({navigation}) => {
               onChangeText={text => setLocation(text)}
               value={location}
             />
-            <BlackButton onPress={handleEventCreation} text="Create" borderRadius={2} />
+            <BlackButton onPress={() => handleEventCreation()} text="Create" borderRadius={2} />
         </View>
       </View>
     </View>
@@ -101,12 +102,10 @@ const EventCreationScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'gold',
     alignItems: 'center',
     justifyContent: 'center',
   },
   bottom: {
-      backgroundColor: 'silver',
       flex: 1, // Ensure it takes up the remaining space
       justifyContent: 'flex-end', // Push content to the bottom
   },
@@ -115,10 +114,8 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent:'center',
-      backgroundColor: "red"
   },
   showContainer: {
-      backgroundColor: "blue",
       flex: 1
   },
   title: {
@@ -134,7 +131,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#007BFF',
     padding: 10,
     width: 300,
     alignItems: 'center',
