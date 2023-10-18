@@ -49,3 +49,6 @@ export const INTEREST_TYPE_FETCH_URL = 'fetch';
 
 //Event attendance entity
 export const EVENT_ATTENDANCE_URL = 'attendance';
+
+//Venue entity
+export const VENUE_TYPE_FETCH_URL = 'fetch';

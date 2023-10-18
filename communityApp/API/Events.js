@@ -104,7 +104,7 @@ export async function getCommunityEvents(token, id) {
     return await postRequest(endpoint, message);
 }
 
-export async function createEvent(token, id, name, description, price, duration, date, location, project_id, interest_id) {
+export async function createEvent(token, id, name, description, price, duration, date, location, interest_id) {
     const message = {
         [TOKEN]: token,
         [ACCOUNT_ID]: id,
@@ -114,7 +114,7 @@ export async function createEvent(token, id, name, description, price, duration,
         [DURATION]: duration,
         [START_DATE]: date,
         [VENUE]: location,
-        [PROJECT_ID]: project_id,
+        [PROJECT_ID]: 1,
         [INTEREST_ID]: interest_id,
     };
 
