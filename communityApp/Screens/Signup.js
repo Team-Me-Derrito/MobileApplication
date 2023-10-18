@@ -2,8 +2,6 @@ import { BIRTHDAY_INVALID_ERROR, COMMUNITY_UNSELECTED_ERROR, GENDER_UNSELECTED_E
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet, Button} from 'react-native';
 import BlackButton from "./Components/BlackButton";
-import Header from './Components/Header';
-import Footer from './Components/Footer';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { createAccount } from '../API/Account';
