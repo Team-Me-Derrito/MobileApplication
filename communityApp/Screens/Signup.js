@@ -161,11 +161,21 @@ const SignupScreen = ({navigation}) => {
         />
         <Text style={styles.errorText}>{validationErrors.nameError}</Text>
 
-        <Text>Birthday:</Text>
-        <View style={styles.dateContainer}>
-          <Button title={birthday.toLocaleDateString()} onPress={showDatePicker} color='black'/>
-          <SimpleLineIcons name="event" size={24} color="black" onPress={showDatePicker}/>
+        <View style={styles.dateInputContainer}>
+          <TextInput
+            style={[styles.input, styles.dateInput]}
+            value={birthday.toLocaleDateString()}
+            editable={false} // makes the text input non-editable
+          />
+          <SimpleLineIcons 
+            name="event" 
+            size={24} 
+            color="black" 
+            onPress={showDatePicker} 
+            style={styles.dateIcon}
+          />
         </View>
+
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
           mode="date"
@@ -290,7 +300,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  bottom: {
+  dateInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'gray',
+    width: 300,
+    height: 40,
+    marginBottom: 20,
+  },
+  dateInput: {
+    flex: 1,
+    padding: 10,
+  },
+  dateIcon: {
+    padding: 10,
+    borderLeftWidth: 1,
+    borderColor: 'gray',
+  },  bottom: {
       flex: 1, // Ensure it takes up the remaining space
       justifyContent: 'flex-end', // Push content to the bottom
   },
