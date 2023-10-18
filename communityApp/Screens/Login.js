@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, useAnimatedValue } from 'react-native';
 import BlackButton from "./Components/BlackButton";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { attemptLogin } from '../API/Account'; 
@@ -10,8 +10,8 @@ const LoginScreen = ({ navigation }) => {
 
   async function checkLogin (){
     try {
-      const userToken = await AsyncStorage.getItem('userToken');
-      if (userToken != null) {
+      const account = await AsyncStorage.getItem('account_id');
+      if (account != null) {
         navigation.navigate('Homepage');
       }
     } catch (error) {
@@ -19,7 +19,7 @@ const LoginScreen = ({ navigation }) => {
     }
   }
 
-  //checkLogin();
+  checkLogin();
   // johndoe@gmail.com
   // pass
 
@@ -28,15 +28,19 @@ const LoginScreen = ({ navigation }) => {
     console.log('Password:', password);
 
     if(email && password){
-      try{
-        await AsyncStorage.setItem('userToken', email);
-      } catch {
-        console.error('Error Saving Token');
-      }
-
       const response = await attemptLogin(email, password);
       console.log(`Response: ${JSON.stringify(response)}`);
       if (response.success === true) {
+        try{
+          await AsyncStorage.setItem('token', response.token);
+        } catch {
+          console.error('Error Saving Token');
+        }
+        try{
+          await AsyncStorage.setItem('account_id', response.account_id.toString());
+        } catch {
+          console.error('Error Saving Token');
+        }
         navigation.navigate('Homepage');
       }
       

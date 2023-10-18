@@ -1,6 +1,6 @@
-import { ACCOUNT_ID, COMMUNITY_ID, ACCOUNT_NAME, GENDER, PHONE, EMAIL, PASSWORD, SALT, TOKEN, BIRTHDAY, ACCOUNT_FETCH_URL, ACCOUNT_LOGIN_URL, ACCOUNT_CREATE_URL, INTEREST_TYPES_SELECTED } from '../constants/Database.js';
+import { ACCOUNT_ID, COMMUNITY_ID, ACCOUNT_NAME, GENDER, PHONE, EMAIL, PASSWORD, SALT, TOKEN, BIRTHDAY, ACCOUNT_FETCH_URL, ACCOUNT_LOGIN_URL, ACCOUNT_CREATE_URL, INTEREST_TYPES_SELECTED, MESSAGE } from '../constants/Database.js';
 import { postRequest } from './BaseRequest.js';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const path = 'accounts/';
 
@@ -12,9 +12,22 @@ const path = 'accounts/';
  * @param {Number} id associated account ID 
  * @returns Json object including the account info. 
  */
-export async function getAccount(token, id) {
+export async function getAccount() {
+
+    account = "3";
+    token = "3";
+
+    try {
+        account = await AsyncStorage.getItem('account_id');
+        token = await AsyncStorage.getItem('token');
+    } catch (error) {
+        console.error('Error checking user token:', error);
+    }
+
+    accNum = parseInt(account);
+
     const message = {
-        [ACCOUNT_ID]: id,
+        [ACCOUNT_ID]: accNum,
         [TOKEN]: token
     };
 
@@ -70,5 +83,27 @@ export async function createAccount(communityId, name, interestTypes, birthday, 
     }
 
     const endpoint = path + ACCOUNT_CREATE_URL; // accounts/create
+    return await postRequest(endpoint, message);
+}
+
+export async function createPost(text) {
+    account = "3";
+    token = "3";
+
+    try {
+        account = await AsyncStorage.getItem('account_id');
+        token = await AsyncStorage.getItem('token');
+    } catch (error) {
+        console.error('Error checking user token:', error);
+    }
+
+    accNum = parseInt(account);
+    const message = {
+        [ACCOUNT_ID]: accNum,
+        [TOKEN]: token,
+        [MESSAGE]: text,
+    };
+
+    const endpoint = path + 'post'; // account/post
     return await postRequest(endpoint, message);
 }

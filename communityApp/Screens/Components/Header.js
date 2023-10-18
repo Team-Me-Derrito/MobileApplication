@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     headerText: {
-        fontSize: 24,
+        fontSize: 20,
+        textAlign: 'center'
     },
     leftChildContainer: {
         width: '30%', // Adjust as needed for your desired spacing
