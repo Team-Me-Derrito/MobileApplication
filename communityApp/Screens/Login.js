@@ -32,11 +32,13 @@ const LoginScreen = ({ navigation }) => {
       console.log(`Response: ${JSON.stringify(response)}`);
       if (response.success === true) {
         try{
+          await AsyncStorage.removeItem('token');
           await AsyncStorage.setItem('token', response.token);
         } catch {
           console.error('Error Saving Token');
         }
         try{
+          await AsyncStorage.removeItem('account_id');
           await AsyncStorage.setItem('account_id', response.account_id.toString());
         } catch {
           console.error('Error Saving Token');
