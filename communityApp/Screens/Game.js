@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     bottom: {
-        backgroundColor: 'silver',
         flex: 1, // Ensure it takes up the remaining space
         justifyContent: 'flex-end', // Push content to the bottom
     },
@@ -79,10 +78,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent:'center',
-        backgroundColor: "red"
     },
     showContainer: {
-        backgroundColor: "blue",
         flex: 1
     },
     image: {
