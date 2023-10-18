@@ -8,6 +8,7 @@ import Footer from './Components/Footer';
 import { getEvent, setAttendence, getAttendence } from '../API/Events';
 import * as Notifications from 'expo-notifications';
 
+
 async function registerForPushNotifications() {
   const { granted } = await Notifications.requestPermissionsAsync();
   if (!granted) {
@@ -16,6 +17,7 @@ async function registerForPushNotifications() {
   }
   return granted;
 }
+
 
 async function scheduleNotification(trigger, eventName, description) {
   await registerForPushNotifications();
@@ -27,6 +29,7 @@ async function scheduleNotification(trigger, eventName, description) {
     trigger: trigger,
   });
 }
+
 
 async function reminderNotification(eventName, description, eventDate) {
   const instantTrigger = new Date().getTime() + 60 * 1000; // Schedules a notification for 20 seconds time
