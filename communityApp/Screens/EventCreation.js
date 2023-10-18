@@ -69,7 +69,7 @@ const EventCreationScreen = ({navigation}) => {
     const dateFormatted = date.toISOString().split('T')[0];
     const priceNum = parseFloat(price);
     const durNum = parseFloat(duration)
-    result = await createEvent('token', 1, title, description, priceNum, durNum, dateFormatted, venueSelected, interestTypesSelected);
+    result = await createEvent(title, description, priceNum, durNum, dateFormatted, venueSelected, interestTypesSelected);
     navigation.navigate('Homepage');
   };
 

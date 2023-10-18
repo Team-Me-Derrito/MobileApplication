@@ -12,9 +12,22 @@ const path = 'accounts/';
  * @param {Number} id associated account ID 
  * @returns Json object including the account info. 
  */
-export async function getAccount(token, id) {
+export async function getAccount() {
+
+    account = "3";
+    token = "3";
+
+    try {
+        account = await AsyncStorage.getItem('account_id');
+        token = await AsyncStorage.getItem('token');
+    } catch (error) {
+        console.error('Error checking user token:', error);
+    }
+
+    accNum = parseInt(account);
+
     const message = {
-        [ACCOUNT_ID]: id,
+        [ACCOUNT_ID]: accNum,
         [TOKEN]: token
     };
 

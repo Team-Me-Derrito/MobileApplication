@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
-import React, { useState, String } from 'react';
+import React, { useState, String, useEffect} from 'react';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import { resolveAssetSource } from 'react-native/Libraries/Image/resolveAssetSource';
+import { getAccount } from '../API/Account';
 
 const imgSource = [
     require('../images/G01.png'),
@@ -31,10 +32,42 @@ const imgSource = [
 ];
 
 export default function Base_Template() {
-    const [score, setScore] = useState(4);
+
+    const [account, setAccount] = useState([]);
+    useEffect(() => {
+      async function getData() {
+          const result = await getAccount();
+          setAccount(result);
+      }
+      if (! account.length) {
+          getData();
+      }
+        
+    }, []);
+
+    console.log('account', account);
+
     const [theme, setTheme] = useState(3);
 
-    const tree = (theme*5) + score;
+    //const accScore = account.score;
+    let accScore = account.score;
+
+    if(accScore < 10){
+        accScore = 0;
+    } else if (accScore >= 10 && accScore < 20){
+        accScore = 1;
+    }
+    else if (accScore >= 20 && accScore < 30){
+        accScore = 2;
+    }
+    else if (accScore >= 30 && accScore < 40){
+        accScore = 3;
+    }
+    else if (accScore >= 40){
+        accScore = 4;
+    }
+
+    const tree = (theme*5) + accScore;
 
     const treePath = imgSource[tree];
 
