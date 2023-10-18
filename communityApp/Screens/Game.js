@@ -4,6 +4,7 @@ import Header from './Components/Header';
 import Footer from './Components/Footer';
 import { resolveAssetSource } from 'react-native/Libraries/Image/resolveAssetSource';
 import { getAccount } from '../API/Account';
+import BlackButton from "./Components/BlackButton";
 
 const imgSource = [
     require('../images/G01.png'),
@@ -78,7 +79,7 @@ export default function Base_Template() {
         <View style={styles.showContainer}>
             <View>
                 <View style={styles.row}>
-                    <Header text="Events" />
+                    <Header text="Your Tree" />
                 </View>
                 
             </View>
@@ -86,7 +87,9 @@ export default function Base_Template() {
                 <View>
                     <Image source={treePath} style={styles.image}/>
                 </View>
-                <Button title="Change Theme" onPress={() => changeTheme()}/>
+                <View style={styles.row}>
+                    <BlackButton text="Change Theme" borderRadius={2} onPress={() => changeTheme()}/>
+                </View>
             </View>
             <View style={styles.row}>
                     <Footer />
@@ -111,6 +114,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent:'center',
+        padding: 4
     },
     showContainer: {
         flex: 1
