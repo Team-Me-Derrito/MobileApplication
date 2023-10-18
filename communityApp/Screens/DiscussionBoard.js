@@ -29,7 +29,7 @@ export default function DiscussionBoard() {
     async function handleMessage(){
         //Sign up logic to be updated
         console.log('Message:', message);
-        result = await createPost('token', 1, message);
+        result = await createPost(message);
         setMessage('');
         setPosts([]);
         setChange(message);

@@ -48,7 +48,8 @@ export default function Profile({ navigation }) {
 
   async function handleLogout() {
     try {
-      await AsyncStorage.removeItem('userToken');
+      await AsyncStorage.removeItem('token');
+      await AsyncStorage.removeItem('account_id');
     } catch (error) {
       console.error('Error removing user token:', error);
     }
