@@ -5,8 +5,10 @@ import BlackButton from "./Components/BlackButton";
 import NiceToggle from "./Components/NiceToggle";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
-import { getEvent, setAttendence, getAttendence } from '../API/Events';
+import { getEvent, setAttendence, getAttendence, deleteEvent } from '../API/Events';
 import * as Notifications from 'expo-notifications';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 /**
  * Gets the permission for push notification.
@@ -21,6 +23,7 @@ async function registerForPushNotifications() {
   }
   return granted;
 }
+
 
 /**
  * Schedule a notification for event.
@@ -39,6 +42,7 @@ async function scheduleNotification(trigger, eventName, description) {
     trigger: trigger,
   });
 }
+
 
 /**
  * Set up notifications for events.
@@ -66,10 +70,18 @@ function handleJoin(navigation, ticketed, setTicketed, eventID, eventName, descr
   setTicketed(! ticketed);
 }
 
+async function handleDelete(account_id, token, event_id) {
+  console.log("Deleting account " + account_id, "token " + token, "event_id " + event_id)
+  await deleteEvent(account_id, token, event_id);
+}
+
 export default function Eventpage({ navigation, route }) {
   const id = route.params;
   const [event, setEvent] = useState("");
   const [ticketed, setTicketed] = useState(false);
+  const [account_id, setAccount] = useState("");
+  const [token, setToken] = useState("");
+
   useEffect(() => {
     async function getData() {
       const result = await getEvent(id);
@@ -78,6 +90,15 @@ export default function Eventpage({ navigation, route }) {
       const attendance = await getAttendence(id);
       console.log("result is ", attendance);
       setTicketed(attendance.attendance);
+      try {
+        const account = await AsyncStorage.getItem('account_id');
+        const sec_token = await AsyncStorage.getItem('token');
+        setAccount(account);
+        setToken(sec_token);
+        console.log("accountids are ", account, result);
+      } catch (error) {
+          console.error('Error checking user token:', error);
+      }
     }
     if (! event) {
       getData();
@@ -101,6 +122,9 @@ export default function Eventpage({ navigation, route }) {
             <Text style={styles.detail}>{event.venue}</Text>
             <View style={styles.buttonContainer}>
               <BlackButton onPress={() => handleJoin(navigation, ticketed, setTicketed, id, event.eventName, event.description, event.dateAndTime)} text={ticketed ? "Already Joined" : "Join"} borderRadius={2} />
+              {(account_id && event && account_id == event.creator_id) ? 
+              <BlackButton text="Delete Event" borderRadius={2} onPress={() => handleDelete(account_id, token, id)} />
+              : <></>}
             </View>
           </ScrollView>
           </SafeAreaView>

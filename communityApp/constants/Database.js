@@ -25,6 +25,7 @@ export const EVENT_SEARCH_URL = 'search';
 export const EVENT_ALL_URL = 'all';
 export const EVENT_COMMUNITY_URL = 'community';
 export const EVENT_QUERY_URL = 'query';
+export const EVENT_DELETE_URL = 'delete';
 export const TITLE = 'name';
 export const DESCRIPTION = 'description';
 export const PRICE = 'price';
@@ -35,6 +36,7 @@ export const MESSAGE = 'message';
 export const CREATE = 'create';
 export const PROJECT_ID = 'project_id';
 export const INTEREST_ID = 'interest_id';
+
 
 //Community entity
 export const COMMUNITY_ID = 'community_id';
