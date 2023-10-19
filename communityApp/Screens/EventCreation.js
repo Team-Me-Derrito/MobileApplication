@@ -10,7 +10,15 @@ import { getInterestTypes } from '../API/Interest';
 import { getVenues } from '../API/Venue';
 import { SelectList, MultipleSelectList } from 'react-native-dropdown-select-list';
 
+
+/**
+ * This is a screen for creating new events.
+ * 
+ * @param {Object} navigation This is the react navigation component used for switching between screens
+ * @returns JSX element
+ */
 const EventCreationScreen = ({navigation}) => {
+  //React usestate setting
   const [interestTypesAvailable, setInterestTypesAvailable] = useState([]);
   const [interestTypesSelected, setInterestTypesSelected] = useState('');
   const [venuesAvailable, setVenuesAvailable] = useState([]);
@@ -49,14 +57,17 @@ const EventCreationScreen = ({navigation}) => {
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
+  //Shows the date picker
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
 
+  //Hides the date picker
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
 
+  //Confirms the users selections
   const handleConfirm = (date) => {
     console.log("A date has been picked: ", date);
     setDate(date);

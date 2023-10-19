@@ -5,6 +5,11 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons'; 
 
+
+/**
+ * This is a component used frequently within the application
+ * @returns JSX element for the footer of the application
+ */
 export default function Footer() {
     const navigation = useNavigation();
     return (

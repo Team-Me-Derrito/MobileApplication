@@ -4,6 +4,13 @@ import BlackButton from "./Components/BlackButton";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { attemptLogin } from '../API/Account'; 
 
+
+/**
+ * Screen for logging into the app
+ * 
+ * @param {Object} navigation navigation object of react
+ * @returns JSX element of the login screen
+ */
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
