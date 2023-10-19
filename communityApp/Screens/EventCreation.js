@@ -63,8 +63,11 @@ const EventCreationScreen = ({navigation}) => {
     hideDatePicker();
   };
 
+  /**
+   * Handles event creation process.
+   * Event will be saved through API request to the server.
+   */
   async function handleEventCreation(){
-    //Sign up logic to be updated
     console.log('title:', title);
     const dateFormatted = date.toISOString().split('T')[0];
     const priceNum = parseFloat(price);

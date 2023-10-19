@@ -23,13 +23,13 @@ export async function getCommunities() {
 /**
  * Gets community posts for the community discussion forum.
  * 
- * @param {*} token Access token for the session
- * @param {*} id Account ID
+ * @param {string} token Access token for the session
+ * @param {Number} id Account ID
  * @returns Json object containing the community posts
  */
 export async function getCommunityPosts() {
-    account = "3";
-    token = "3";
+    var account;
+    var token;
 
     try {
         account = await AsyncStorage.getItem('account_id');

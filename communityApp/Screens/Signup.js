@@ -1,9 +1,7 @@
 import { BIRTHDAY_INVALID_ERROR, COMMUNITY_UNSELECTED_ERROR, GENDER_UNSELECTED_ERROR, EMAIL_INVALID_ERROR, NAME_EMPTY_ERROR, PASSWORD_INCONSISTENT_ERROR, PASSWORD_WEAK_ERROR, PHONE_INVALID_ERROR, VALIDATION_ERRORS } from '../constants/SignupConst';
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet, Button} from 'react-native';
+import { View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet, Modal, Button} from 'react-native';
 import BlackButton from "./Components/BlackButton";
-import Header from './Components/Header';
-import Footer from './Components/Footer';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { createAccount } from '../API/Account';
@@ -24,6 +22,7 @@ const SignupScreen = ({navigation}) => {
   const [interestTypesSelected, setInterestTypesSelected] = useState([]);
   const [genderSelected, setGenderSelected] = useState('');
   const [validationErrors, setValidationErrors] = useState(VALIDATION_ERRORS);
+  const [isSignupSuccessModalVisible, setSignupSuccessModalVisible] = useState(false);
 
   // Some states that will be updated when the page is loaded.
   const [communityAvailable, setCommunityAvailable] = useState([]);
@@ -145,7 +144,8 @@ const SignupScreen = ({navigation}) => {
         } catch {
           console.error('Error Saving Token');
         }
-        navigation.navigate('Homepage');
+
+        setSignupSuccessModalVisible(true);
       }
     } 
 };
@@ -293,6 +293,30 @@ const SignupScreen = ({navigation}) => {
 
     </View>
 
+    {/* Signup Successful Modal */}
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={isSignupSuccessModalVisible}
+      onRequestClose={() => {
+        setSignupSuccessModalVisible(false);
+      }}
+    >
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)'}}>
+        <View style={{backgroundColor: 'white', padding: 20, borderRadius: 10}}>
+          <Text>Signup Successful!</Text>
+          <Button
+            title="Go to login page"
+            onPress={() => {
+              setSignupSuccessModalVisible(false);
+              // Navigate to another screen or reset the form
+              navigation.navigate('Login');
+            }}
+          />
+        </View>
+      </View>
+    </Modal>
+
   </View>
   );
 };
@@ -325,6 +349,7 @@ const styles = StyleSheet.create({
   dateInput: {
     flex: 1,
     padding: 10,
+    marginTop: 20,
   },
   dateIcon: {
     padding: 10,
