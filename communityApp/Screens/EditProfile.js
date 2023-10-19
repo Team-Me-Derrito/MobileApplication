@@ -14,6 +14,7 @@ import { getAccount, updateAccount } from '../API/Account';
 
 
 const EditProfileScreen = ({navigation}) => {
+  //Variable setting for the react hooks
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');

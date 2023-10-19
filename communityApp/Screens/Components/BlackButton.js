@@ -1,7 +1,13 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-
+/**
+ * This is a component used frequently within the application
+ * 
+ * @param {Function} onPress Function to call when the button is clicked
+ * @param {String} text text for the button
+ * @returns JSX element
+ */
 export default function BlackButton({
     onPress,
     text,

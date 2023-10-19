@@ -2,7 +2,15 @@ import { StyleSheet, Text, View, Pressable, Dimensions, Image } from 'react-nati
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 
-
+/**
+ * This is a component used frequently within the application
+ * 
+ * @param {Function} onPress Function to call when the button is clicked
+ * @param {String} text event description
+ * @param {String} title Text of the event
+ * @param {String} location Location of the event
+ * @returns JSX element
+ */
 export default function EventBox({
     onPress,
     title,

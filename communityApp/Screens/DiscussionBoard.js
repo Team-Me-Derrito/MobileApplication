@@ -9,6 +9,11 @@ import Comment from './Components/BoardComment'
 import { getCommunityPosts } from '../API/Community';
 import { createPost } from '../API/Account'
 
+/**
+ * This is a component is for the displaying and handling of the messaging feature. This handles all getting 
+ * and displaying of messages.
+ * @returns JSX element
+ */
 export default function DiscussionBoard() {
     const [message, setMessage] = useState('');
     const [change, setChange] = useState('');

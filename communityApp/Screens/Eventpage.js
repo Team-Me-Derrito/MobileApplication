@@ -34,6 +34,7 @@ async function registerForPushNotifications() {
  */
 async function scheduleNotification(trigger, eventName, description) {
   await registerForPushNotifications();
+  //This is setting the title and contents of the notification
   await Notifications.scheduleNotificationAsync({
     content: {
       title: eventName,
@@ -55,33 +56,53 @@ async function scheduleNotification(trigger, eventName, description) {
  * @param {Date} eventDate date of the event to be held
  */
 async function reminderNotification(eventName, description, eventDate) {
-  const instantTrigger = new Date().getTime() + 60 * 1000; // Schedules a notification for 60 seconds time
-  const dayBeforeTrigger = new Date(eventDate).getTime() - 24 * 60 * 60 * 1000; // Schedules a notification for days before start of event
+   // Schedules a notification for 60 seconds time to remind users of joined events
+  const instantTrigger = new Date().getTime() + 60 * 1000;
+   // Schedules a notification for days before start of event
+  const dayBeforeTrigger = new Date(eventDate).getTime() - 24 * 60 * 60 * 1000;
+
+  //This schedules both the notifications
   await scheduleNotification(instantTrigger, eventName, "You have Joined successfully. " + description);
   await scheduleNotification(dayBeforeTrigger, eventName, "This starts tomorrow " + description);  
   console.log("Notifications saved for a minute from now");
 }
 function handleJoin(navigation, ticketed, setTicketed, eventID, eventName, description, eventDate) {
-  const state = ticketed; //Possible race condition with setting then sending
+  //state of the ticket is stored to avoid race conditions
+  const state = ticketed;
+
+  //If the current state is false when clicked the notifications are scheduled
   if (! state) {
     reminderNotification(eventName, description, eventDate, eventName);
   }
+  //Calls API function to notify back-end of event joining
   setAttendence(! state, eventID);
   setTicketed(! ticketed);
 }
 
+/**
+ * Set up notifications for events.
+ * It will set two notifications:
+ * One for telling the user that they have joined the event successfully.
+ * One for telling the user that the event is scheduled the day after.
+ * 
+ * @param {string} account_id account ID of currently logged in user
+ * @param {string} token authentication token of users session
+ * @param {string} event_id event_id of the opened event
+ */
 async function handleDelete(account_id, token, event_id) {
   console.log("Deleting account " + account_id, "token " + token, "event_id " + event_id)
   await deleteEvent(account_id, token, event_id);
 }
 
 export default function Eventpage({ navigation, route }) {
+  //Getting data passed through route and setting states
   const id = route.params;
   const [event, setEvent] = useState("");
   const [ticketed, setTicketed] = useState(false);
   const [account_id, setAccount] = useState("");
   const [token, setToken] = useState("");
 
+  //Asynchronously fetch data from backend and set states
   useEffect(() => {
     async function getData() {
       const result = await getEvent(id);

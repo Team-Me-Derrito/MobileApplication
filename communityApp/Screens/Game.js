@@ -6,6 +6,7 @@ import { resolveAssetSource } from 'react-native/Libraries/Image/resolveAssetSou
 import { getAccount } from '../API/Account';
 import BlackButton from "./Components/BlackButton";
 
+//Paths to all source images for game
 const imgSource = [
     require('../images/G01.png'),
     require('../images/G11.png'),
@@ -32,6 +33,9 @@ const imgSource = [
     require('../images/P41.png')
 ];
 
+/**
+ * Base template for displaying the users game
+ */
 export default function Base_Template() {
 
     const [account, setAccount] = useState([]);

@@ -6,7 +6,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAccount } from '../API/Account';
 import React, { useState, useEffect } from 'react';
 
-
+/**
+ * User can see their profile information
+ * 
+ * @param {Object} navigation navigation object of react
+ * @returns JSX element of the profile screen
+ */
 export default function Profile({ navigation }) {
   const [account, setAccount] = useState([]);
   useEffect(() => {

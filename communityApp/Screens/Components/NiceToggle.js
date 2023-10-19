@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
+
+/**
+ * This is a component used frequently within the application
+ * @returns JSX element
+ */
 export default function CustomToggle() {
   const [isToggled, setIsToggled] = useState(false);
 

@@ -8,11 +8,23 @@ import Footer from './Components/Footer';
 import EventBox from './Components/EventBox';
 import { getAllEvents } from '../API/Events';
 
-//Just takes the ID of the event and will fetch to get all information about it not sent with initial fetch
+/**
+ * Handles button press of opening event
+ * 
+ * @param {string} id event_id for what event to open
+ * @param {Object} navigation navigation object of react
+ * @returns {navigation} Navigations to new screen once ran
+ */
 function handlePress(id, navigation) {
     navigation.navigate('Eventpage', id);
 };
 
+/**
+ * Screen for displaying events of that community
+ * 
+ * @param {Object} navigation navigation object of react
+ * @returns JSX element of the homepage screen
+ */
 export default function Homepage({ navigation }) {
     const title = 'Soccer';
     const text = 'Come Play Some Games in the Park';

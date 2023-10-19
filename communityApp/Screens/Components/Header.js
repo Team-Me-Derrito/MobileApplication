@@ -5,6 +5,13 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons'; 
 
+
+/**
+ * This is a component used frequently within the application
+ * 
+ * @param {String} text the name of the pages currently on
+ * @returns JSX element
+ */
 export default function Header({ text }) {
     const navigation = useNavigation();
     return (
