@@ -15,18 +15,18 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // async function checkLogin (){
-  //   try {
-  //     const account = await AsyncStorage.getItem('account_id');
-  //     if (account != null) {
-  //       navigation.navigate('Homepage');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error checking user token:', error);
-  //   }
-  // }
+  async function checkLogin (){
+     try {
+       const account = await AsyncStorage.getItem('account_id');
+       if (account != null) {
+         navigation.navigate('Homepage');
+       }
+     } catch (error) {
+       console.error('Error checking user token:', error);
+    }
+  }
 
-  // checkLogin();
+  checkLogin();
 
   /**
    * Handles the login attempt. 

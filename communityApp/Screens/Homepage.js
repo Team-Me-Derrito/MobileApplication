@@ -25,21 +25,29 @@ function handlePress(id, navigation) {
  * @param {Object} navigation navigation object of react
  * @returns JSX element of the homepage screen
  */
-export default function Homepage({ navigation }) {
-    const title = 'Soccer';
-    const text = 'Come Play Some Games in the Park';
-    const location = 'Kenmore Park';
+export default function Homepage({ navigation, route }) {
     const [events, setEvents] = useState([]);
     useEffect(() => {
         async function getData() {
             const result = await getAllEvents();
             setEvents(result.events);
+            console.log(result.events);
         }
         if (! events.length) {
             getData();
         }
+        const refreshInterval = 15 * 1000;
+    
+        const intervalId = setInterval(() => {
+          // This will refresh in 15 seconds
+          getData();
+        }, refreshInterval);
+        return () => {
+          clearInterval(intervalId);
+        };
         
     }, []);
+
     return (
         <View style={styles.showContainer}>
             <View>
