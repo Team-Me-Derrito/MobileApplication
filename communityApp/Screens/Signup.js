@@ -9,6 +9,7 @@ import { getInterestTypes } from '../API/Interest';
 import { getCommunities } from '../API/Community';
 import { SelectList, MultipleSelectList } from 'react-native-dropdown-select-list';
 import { isValidEmail, isValidPhone, isStrongPassword, isPasswordConsistent, isValidBirthday } from '../Utilities/AccountUtils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignupScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -131,6 +132,19 @@ const SignupScreen = ({navigation}) => {
       console.log(JSON.stringify(response));
   
       if (response.success) {
+        try{
+          await AsyncStorage.removeItem('token');
+          await AsyncStorage.setItem('token', response.token);
+        } catch {
+          console.error('Error Saving Token');
+        }
+        try{
+          await AsyncStorage.removeItem('account_id');
+          await AsyncStorage.setItem('account_id', response.account_id.toString());
+        } catch {
+          console.error('Error Saving Token');
+        }
+
         setSignupSuccessModalVisible(true);
       }
     } 
