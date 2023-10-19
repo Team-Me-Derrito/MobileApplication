@@ -21,3 +21,9 @@ export const PASSWORD_WEAK_ERROR = 'Password must meet the following criteria:\n
                                     '- Include at least one capital letter\n' + 
                                     '- Include at least one lowercase letter';
 export const PASSWORD_INCONSISTENT_ERROR = 'Passwords do not match - please check';
+export const GENDERS_OPTIONS = [
+    {key: 1, value: 'Male'},
+    {key: 2, value: 'Female'},
+    {key: 3, value: 'Other'},
+    {key:4, value: 'Prefer not to say'}
+  ];

@@ -16,6 +16,7 @@ export const TOKEN = 'Token';
 export const ACCOUNT_FETCH_URL = 'fetch';
 export const ACCOUNT_CREATE_URL = 'create';
 export const ACCOUNT_LOGIN_URL = 'login';
+export const ACCOUNT_UPDATE_URL = 'update';
 
 //Event entity
 export const EVENT_ID = 'event_id';

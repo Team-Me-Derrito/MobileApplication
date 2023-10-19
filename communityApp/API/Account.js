@@ -1,4 +1,4 @@
-import { ACCOUNT_ID, COMMUNITY_ID, ACCOUNT_NAME, GENDER, PHONE, EMAIL, PASSWORD, SALT, TOKEN, BIRTHDAY, ACCOUNT_FETCH_URL, ACCOUNT_LOGIN_URL, ACCOUNT_CREATE_URL, INTEREST_TYPES_SELECTED, MESSAGE } from '../constants/Database.js';
+import { ACCOUNT_ID, COMMUNITY_ID, ACCOUNT_NAME, GENDER, PHONE, EMAIL, PASSWORD, SALT, TOKEN, BIRTHDAY, ACCOUNT_FETCH_URL, ACCOUNT_LOGIN_URL, ACCOUNT_CREATE_URL, INTEREST_TYPES_SELECTED, MESSAGE, ACCOUNT_UPDATE_URL } from '../constants/Database.js';
 import { postRequest } from './BaseRequest.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -83,6 +83,37 @@ export async function createAccount(communityId, name, interestTypes, birthday, 
     }
 
     const endpoint = path + ACCOUNT_CREATE_URL; // accounts/create
+    return await postRequest(endpoint, message);
+}
+
+/**
+ * Updates an account with given information
+ * 
+ * @param {Number} communityId community_id property
+ * @param {string} name AccountName property
+ * @param {object} interestTypes Array of selected interest types ids.
+ *                          structure looks like:
+ *                          [1, 45, 23, 22] <- you can assume those elements are Number type
+ * @param {Date} birthday Birthday property
+ * @param {string} gender Gender property
+ * @param {string} phone PhoneNumber property
+ * @param {string} email Email property
+ * 
+ * @returns Json object to tell if the update went successfully
+ */
+export async function updateAccount(communityId, name, interestTypes, birthday, gender, phone, email) {
+    const birthdayFormatted = birthday.toISOString().split('T')[0];
+    const message = {
+        [COMMUNITY_ID]: communityId,
+        [ACCOUNT_NAME]: name,
+        [INTEREST_TYPES_SELECTED]: interestTypes,
+        [BIRTHDAY]: birthdayFormatted,
+        [GENDER]: gender,
+        [PHONE]: phone,
+        [EMAIL]: email
+    }
+
+    const endpoint = path + ACCOUNT_UPDATE_URL; // accounts/update
     return await postRequest(endpoint, message);
 }
 

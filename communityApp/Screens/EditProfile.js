@@ -1,4 +1,4 @@
-import { BIRTHDAY_INVALID_ERROR, COMMUNITY_UNSELECTED_ERROR, GENDER_UNSELECTED_ERROR, EMAIL_INVALID_ERROR, NAME_EMPTY_ERROR, PASSWORD_INCONSISTENT_ERROR, PASSWORD_WEAK_ERROR, PHONE_INVALID_ERROR, VALIDATION_ERRORS } from '../constants/SignupConst';
+import { BIRTHDAY_INVALID_ERROR, COMMUNITY_UNSELECTED_ERROR, GENDER_UNSELECTED_ERROR, EMAIL_INVALID_ERROR, NAME_EMPTY_ERROR, PASSWORD_INCONSISTENT_ERROR, PASSWORD_WEAK_ERROR, PHONE_INVALID_ERROR, VALIDATION_ERRORS, GENDERS_OPTIONS } from '../constants/SignupConst';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import React, { useState, useEffect } from 'react';
@@ -9,14 +9,12 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { getInterestTypes } from '../API/Interest';
 import { getCommunities } from '../API/Community';
 import { SelectList, MultipleSelectList } from 'react-native-dropdown-select-list';
-import { isValidEmail, isValidPhone, isStrongPassword, isPasswordConsistent, isValidBirthday } from '../Utilities/AccountUtils';
+import { isValidEmail, isValidPhone, isValidBirthday } from '../Utilities/AccountUtils';
 import { getAccount } from '../API/Account';
 
 
 const EditProfileScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [birthday, setBirthday] = useState(new Date());
@@ -26,6 +24,9 @@ const EditProfileScreen = ({navigation}) => {
   const [validationErrors, setValidationErrors] = useState(VALIDATION_ERRORS);
   const [communityAvailable, setCommunityAvailable] = useState([]);
   const [interestTypesAvailable, setInterestTypesAvailable] = useState([]);
+  const [defaultCommunityOption, setDefaultCommunityOption] = useState(null);
+  const [defaultInterestTypesOption, setDefaultInterestTypesOption] = useState(null);
+  const [defaultGenderOption, setDefaultGenderOption] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,8 +60,8 @@ const EditProfileScreen = ({navigation}) => {
    * "email": account.email,
    * "interests": interests ([{"interest": interest.interestType.interestType (interest type's name)}...])
    * }
-   * @param {Array<JSON>} communities
-   * @param {Array<JSON>} interestTypes
+   * @param {Array<JSON>} communities - Array of JSON objects representing all available communities
+   * @param {Array<JSON>} interestTypes - Array of JSON objects representing all available interest types
    */
   function setCurrentAccountInfo(accountInfo, communities, interestTypes) {
     if (typeof(accountInfo) !== "object") {
@@ -68,23 +69,32 @@ const EditProfileScreen = ({navigation}) => {
     }
 
     setName(accountInfo.name);
-    setBirthday(new Date.parse(accountInfo.birthday));
-    setNumber(accountInfo.phoneNumber);
+    setBirthday(new Date(Date.parse(accountInfo.birthday)));
+    setNumber(accountInfo.phoneNumber.toString());
     setEmail(accountInfo.email);
+    setGenderSelected(accountInfo.gender);
+    setDefaultGenderOption(GENDERS_OPTIONS.find((option => option.value === accountInfo.gender)));
+
     const communityCurrent = communities.find(community => community.value === accountInfo.community);
     if (!communityCurrent) {
       throw Error(`Cannot find community with the value ${accountInfo.community}`);
     }
     
     setCommunitySelected(communityCurrent.key);
+    setDefaultCommunityOption(communityCurrent);
     
     const usersInterests = accountInfo.interests.map(interest => interest.interest);
     var interestsKeysCurrent = [];
+    var interestsPairsCurrent = [];
     interestTypes.foreach((interest) => {
-      if (interest.value in usersInterests) interestsKeysCurrent.append(interest.key);
+      if (interest.value in usersInterests) {
+        interestsKeysCurrent.append(interest.key);
+        interestsPairsCurrent.append(interest);
+      }
     });
 
     setInterestTypesSelected(interestsKeysCurrent);
+    setDefaultInterestTypesOption(interestsPairsCurrent);
   }
 
   /**
@@ -136,9 +146,6 @@ const EditProfileScreen = ({navigation}) => {
     const genderErrorText = genderSelected ? '' : GENDER_UNSELECTED_ERROR;
     const phoneErrorText = isValidPhone(number) ? '' : PHONE_INVALID_ERROR;
     const emailErrorText = isValidEmail(email) ? '' : EMAIL_INVALID_ERROR;
-    const passwordErrorText = isStrongPassword(password) ? '' : PASSWORD_WEAK_ERROR;
-    const passwordConfirmErrorText = isPasswordConsistent(password, passwordConfirm) ? '' : PASSWORD_INCONSISTENT_ERROR;
-
 
     const validationErrorsUpdated = {
       nameError: nameErrorText,
@@ -147,8 +154,6 @@ const EditProfileScreen = ({navigation}) => {
       genderError: genderErrorText,  
       phoneError: phoneErrorText, 
       emailError: emailErrorText,
-      passwordError: passwordErrorText,
-      passwordConfirmError: passwordConfirmErrorText
     }
 
     setValidationErrors(validationErrorsUpdated);
@@ -162,7 +167,7 @@ const EditProfileScreen = ({navigation}) => {
    * It sends the request to the server to create a new account when the user inputs match the criteria.
    * When the account creation is successful, it navigates to the homepage.
    */
-  async function handleSignup() {
+  async function handleUpdate() {
     if (validateInputs()) {
       const response = await createAccount(communitySelected,
       name, 
@@ -170,8 +175,7 @@ const EditProfileScreen = ({navigation}) => {
       birthday, 
       genderSelected, 
       number, 
-      email, 
-      password); 
+      email); 
 
       console.log(JSON.stringify(response));
   
@@ -194,6 +198,7 @@ const EditProfileScreen = ({navigation}) => {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
 
+        <Text>Name:</Text>
         <TextInput
           style={styles.input}
           placeholder="Name"
@@ -202,6 +207,7 @@ const EditProfileScreen = ({navigation}) => {
         />
         <Text style={styles.errorText}>{validationErrors.nameError}</Text>
 
+        <Text>Birthday:</Text>
         <View style={styles.dateInputContainer}>
           <TextInput
             style={[styles.input, styles.dateInput]}
@@ -233,6 +239,7 @@ const EditProfileScreen = ({navigation}) => {
             setSelected={(val) => setCommunitySelected(val)} 
             data={communityAvailable} 
             save="key"
+            defaultOption={defaultCommunityOption}
           />
         </View>
         <Text style={styles.errorText}>{validationErrors.communityError}</Text>
@@ -244,6 +251,7 @@ const EditProfileScreen = ({navigation}) => {
             data={interestTypesAvailable} 
             save="key"
             label="Your Interest" 
+            defaultOption={defaultInterestTypesOption}
           />  
         </View>
 
@@ -251,20 +259,15 @@ const EditProfileScreen = ({navigation}) => {
           <Text>Gender:</Text>
           <SelectList 
             setSelected={(val) => setGenderSelected(val)} 
-            data={
-              [
-                {key: 1, value: 'Male'},
-                {key: 2, value: 'Female'},
-                {key: 3, value: 'Other'},
-                {key:4, value: 'Prefer not to say'}
-              ]
-            } 
+            data={GENDERS_OPTIONS} 
             save="value"
             label="Your gender" 
+            defaultOption={defaultGenderOption}
           />  
         </View>
         <Text style={styles.errorText}>{validationErrors.genderError}</Text>
 
+        <Text>Phone Number:</Text>
         <TextInput
           style={styles.input}
           placeholder="Phone Number"
@@ -275,6 +278,7 @@ const EditProfileScreen = ({navigation}) => {
         />
         <Text style={styles.errorText}>{validationErrors.phoneError}</Text>
 
+        <Text>Email:</Text>
         <TextInput
           style={styles.input}
           placeholder="Email"
@@ -283,29 +287,11 @@ const EditProfileScreen = ({navigation}) => {
         />
         <Text style={styles.errorText}>{validationErrors.emailError}</Text>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          secureTextEntry
-          onChangeText={text => setPassword(text)}
-          value={password}
-        />
-        <Text style={styles.errorText}>{validationErrors.passwordError}</Text>
-
-        <TextInput
-          style={styles.input}
-          placeholder="Confirm Password"
-          secureTextEntry
-          onChangeText={text => setPasswordConfirm(text)}
-          value={passwordConfirm}
-        />
-        <Text style={styles.errorText}>{validationErrors.passwordConfirmError}</Text>
-
       </ScrollView>
 
       <View style={styles.bottomContainer}>
         <View style={styles.buttonContainer}>
-          <BlackButton onPress={handleSignup} text="Create" borderRadius={2} />
+          <BlackButton onPress={handleUpdate} text="Update" borderRadius={2} />
         </View>
       </View>
 

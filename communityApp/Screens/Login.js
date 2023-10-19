@@ -20,8 +20,6 @@ const LoginScreen = ({ navigation }) => {
   }
 
   checkLogin();
-  // johndoe@gmail.com
-  // pass
 
   async function handleLogin (){
     console.log('Email:', email);
