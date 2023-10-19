@@ -26,8 +26,12 @@ export default function DiscussionBoard() {
         
     }, [change]);
 
+    /**
+     * Handles send process.
+     * It sends a request to the server and states will be modified after saving.
+     * change variable will be updated to trigger userEffect
+     */
     async function handleMessage(){
-        //Sign up logic to be updated
         console.log('Message:', message);
         result = await createPost(message);
         setMessage('');
@@ -35,7 +39,6 @@ export default function DiscussionBoard() {
         setChange(message);
     };
 
-    //Code goes here
     return (
         <View style={styles.showContainer}>
             <View>

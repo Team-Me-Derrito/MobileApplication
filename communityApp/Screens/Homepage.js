@@ -10,7 +10,6 @@ import { getAllEvents } from '../API/Events';
 
 //Just takes the ID of the event and will fetch to get all information about it not sent with initial fetch
 function handlePress(id, navigation) {
-    //Sign up logic to be updated
     navigation.navigate('Eventpage', id);
 };
 
