@@ -10,7 +10,7 @@ import { getInterestTypes } from '../API/Interest';
 import { getCommunities } from '../API/Community';
 import { SelectList, MultipleSelectList } from 'react-native-dropdown-select-list';
 import { isValidEmail, isValidPhone, isValidBirthday } from '../Utilities/AccountUtils';
-import { getAccount } from '../API/Account';
+import { getAccount, updateAccount } from '../API/Account';
 
 
 const EditProfileScreen = ({navigation}) => {
@@ -86,7 +86,7 @@ const EditProfileScreen = ({navigation}) => {
     const usersInterests = accountInfo.interests.map(interest => interest.interest);
     var interestsKeysCurrent = [];
     var interestsPairsCurrent = [];
-    interestTypes.foreach((interest) => {
+    interestTypes.forEach((interest) => {
       if (interest.value in usersInterests) {
         interestsKeysCurrent.append(interest.key);
         interestsPairsCurrent.append(interest);
@@ -95,6 +95,7 @@ const EditProfileScreen = ({navigation}) => {
 
     setInterestTypesSelected(interestsKeysCurrent);
     setDefaultInterestTypesOption(interestsPairsCurrent);
+    console.log(`Default interest types: ${interestsPairsCurrent}`);
   }
 
   /**
@@ -168,8 +169,10 @@ const EditProfileScreen = ({navigation}) => {
    * When the account creation is successful, it navigates to the homepage.
    */
   async function handleUpdate() {
+    console.log(`Gender: ${genderSelected}`);
+    console.log(`Interests: ${interestTypesSelected}`);
     if (validateInputs()) {
-      const response = await createAccount(communitySelected,
+      const response = await updateAccount(communitySelected,
       name, 
       interestTypesSelected, 
       birthday, 

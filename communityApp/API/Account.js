@@ -14,8 +14,8 @@ const path = 'accounts/';
  */
 export async function getAccount() {
 
-    account = "3";
-    token = "3";
+    var account;
+    var token;
 
     try {
         account = await AsyncStorage.getItem('account_id');
@@ -91,7 +91,7 @@ export async function createAccount(communityId, name, interestTypes, birthday, 
  * 
  * @param {Number} communityId community_id property
  * @param {string} name AccountName property
- * @param {object} interestTypes Array of selected interest types ids.
+ * @param {Array<Number>} interestTypes Array of selected interest types ids.
  *                          structure looks like:
  *                          [1, 45, 23, 22] <- you can assume those elements are Number type
  * @param {Date} birthday Birthday property
@@ -102,8 +102,22 @@ export async function createAccount(communityId, name, interestTypes, birthday, 
  * @returns Json object to tell if the update went successfully
  */
 export async function updateAccount(communityId, name, interestTypes, birthday, gender, phone, email) {
+    var account;
+    var token;
+
+    try {
+        account = await AsyncStorage.getItem('account_id');
+        token = await AsyncStorage.getItem('token');
+    } catch (error) {
+        console.error('Error checking user token:', error);
+    }
+
+    accNum = parseInt(account);
+
     const birthdayFormatted = birthday.toISOString().split('T')[0];
     const message = {
+        [ACCOUNT_ID]: accNum,
+        [TOKEN]: token,
         [COMMUNITY_ID]: communityId,
         [ACCOUNT_NAME]: name,
         [INTEREST_TYPES_SELECTED]: interestTypes,
@@ -112,14 +126,15 @@ export async function updateAccount(communityId, name, interestTypes, birthday, 
         [PHONE]: phone,
         [EMAIL]: email
     }
+    console.log(`Sending: ${interestTypes, gender}`);
 
     const endpoint = path + ACCOUNT_UPDATE_URL; // accounts/update
     return await postRequest(endpoint, message);
 }
 
 export async function createPost(text) {
-    account = "3";
-    token = "3";
+    var account;
+    var token;
 
     try {
         account = await AsyncStorage.getItem('account_id');
