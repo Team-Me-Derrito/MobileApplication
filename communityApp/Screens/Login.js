@@ -8,23 +8,24 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  async function checkLogin (){
-    try {
-      const account = await AsyncStorage.getItem('account_id');
-      if (account != null) {
-        navigation.navigate('Homepage');
-      }
-    } catch (error) {
-      console.error('Error checking user token:', error);
-    }
-  }
+  // async function checkLogin (){
+  //   try {
+  //     const account = await AsyncStorage.getItem('account_id');
+  //     if (account != null) {
+  //       navigation.navigate('Homepage');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error checking user token:', error);
+  //   }
+  // }
 
-  checkLogin();
+  // checkLogin();
 
+  /**
+   * Handles the login attempt. 
+   * When the login is successful, it wil get the token and account ID for database access during the session.
+   */
   async function handleLogin (){
-    console.log('Email:', email);
-    console.log('Password:', password);
-
     if(email && password){
       const response = await attemptLogin(email, password);
       console.log(`Response: ${JSON.stringify(response)}`);

@@ -335,6 +335,7 @@ const styles = StyleSheet.create({
   dateInput: {
     flex: 1,
     padding: 10,
+    marginTop: 20,
   },
   dateIcon: {
     padding: 10,

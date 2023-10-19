@@ -13,8 +13,8 @@ const path = 'events/';
  */
 export async function getRecommended() {
 
-    account = "3";
-    token = "3";
+    var account;
+    var token;
 
     try {
         account = await AsyncStorage.getItem('account_id');
@@ -34,10 +34,16 @@ export async function getRecommended() {
     return await postRequest(endpoint, message);
 }
 
+/**
+ * Gets the event info with the given event ID
+ * 
+ * @param {Number} eventID 
+ * @returns Json object containing the event info
+ */
 export async function getEvent(eventID) {
 
-    account = "3";
-    token = "3";
+    var account;
+    var token;
 
     try {
         account = await AsyncStorage.getItem('account_id');
@@ -182,6 +188,18 @@ export async function getCommunityEvents() {
     return await postRequest(endpoint, message);
 }
 
+/**
+ * Creates a new event with the given information.
+ * 
+ * @param {string} name Name of the event
+ * @param {string} description Description of the event
+ * @param {string} price Price of the event
+ * @param {string} duration Duration of the event (How long the event will be held for)
+ * @param {Date} date Date of the event
+ * @param {string} location Location of the event 
+ * @param {Number} interest_id Interest type associated with the event
+ * @returns Json object containing the response from the server
+ */
 export async function createEvent(name, description, price, duration, date, location, interest_id) {
 
     account = "3";

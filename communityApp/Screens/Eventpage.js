@@ -8,6 +8,11 @@ import Footer from './Components/Footer';
 import { getEvent, setAttendence, getAttendence } from '../API/Events';
 import * as Notifications from 'expo-notifications';
 
+/**
+ * Gets the permission for push notification.
+ * 
+ * @returns bool - true if Notification is granted, otherwise false 
+ */
 async function registerForPushNotifications() {
   const { granted } = await Notifications.requestPermissionsAsync();
   if (!granted) {
@@ -17,6 +22,13 @@ async function registerForPushNotifications() {
   return granted;
 }
 
+/**
+ * Schedule a notification for event.
+ * 
+ * @param {*} trigger when to push the notification
+ * @param {string} eventName name of the event
+ * @param {string} description description of the event 
+ */
 async function scheduleNotification(trigger, eventName, description) {
   await registerForPushNotifications();
   await Notifications.scheduleNotificationAsync({
@@ -28,8 +40,18 @@ async function scheduleNotification(trigger, eventName, description) {
   });
 }
 
+/**
+ * Set up notifications for events.
+ * It will set two notifications:
+ * One for telling the user that they have joined the event successfully.
+ * One for telling the user that the event is scheduled the day after.
+ * 
+ * @param {string} eventName name of the event
+ * @param {string} description description of the event
+ * @param {Date} eventDate date of the event to be held
+ */
 async function reminderNotification(eventName, description, eventDate) {
-  const instantTrigger = new Date().getTime() + 60 * 1000; // Schedules a notification for 20 seconds time
+  const instantTrigger = new Date().getTime() + 60 * 1000; // Schedules a notification for 60 seconds time
   const dayBeforeTrigger = new Date(eventDate).getTime() - 24 * 60 * 60 * 1000; // Schedules a notification for days before start of event
   await scheduleNotification(instantTrigger, eventName, "You have Joined successfully. " + description);
   await scheduleNotification(dayBeforeTrigger, eventName, "This starts tomorrow " + description);  

@@ -1,4 +1,4 @@
-import { ACCOUNT_ID, COMMUNITY_ID, ACCOUNT_NAME, GENDER, PHONE, EMAIL, PASSWORD, SALT, TOKEN, BIRTHDAY, ACCOUNT_FETCH_URL, ACCOUNT_LOGIN_URL, ACCOUNT_CREATE_URL, INTEREST_TYPES_SELECTED, MESSAGE, ACCOUNT_UPDATE_URL } from '../constants/Database.js';
+import { ACCOUNT_ID, COMMUNITY_ID, ACCOUNT_NAME, GENDER, PHONE, EMAIL, PASSWORD, TOKEN, BIRTHDAY, ACCOUNT_FETCH_URL, ACCOUNT_LOGIN_URL, ACCOUNT_CREATE_URL, INTEREST_TYPES_SELECTED, MESSAGE, ACCOUNT_UPDATE_URL } from '../constants/Database.js';
 import { postRequest } from './BaseRequest.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -132,6 +132,12 @@ export async function updateAccount(communityId, name, interestTypes, birthday, 
     return await postRequest(endpoint, message);
 }
 
+/**
+ * Creates a new post for the discussion forum.
+ * 
+ * @param {string} text 
+ * @returns JSON object containing the response from the server
+ */
 export async function createPost(text) {
     var account;
     var token;

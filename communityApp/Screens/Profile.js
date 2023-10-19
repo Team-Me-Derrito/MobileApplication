@@ -1,17 +1,11 @@
 import { StyleSheet, Text, View, Pressable, ScrollView, Image, TouchableOpacity, SafeAreaView} from 'react-native';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import BlackButton from "./Components/BlackButton";
 import Header from './Components/Header';
 import Footer from './Components/Footer';
-import EventBox from './Components/EventBox';
-import { Rating } from 'react-native-ratings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAccount } from '../API/Account';
 import React, { useState, useEffect } from 'react';
 
-function test() {
-    console.log('test');
-}
 
 export default function Profile({ navigation }) {
   const [account, setAccount] = useState([]);

@@ -5,10 +5,10 @@ import { postRequest } from './BaseRequest.js';
 const path = 'venues/';
 
 /**
- * Get the list of interest types.
- * It does not require access token for authentication since it will be used for signup the process.
+ * Get the list of venues.
+ * It does not require access token for authentication since it is public information
  * 
- * @returns Json object containing the list of interest types
+ * @returns Json object containing the list of venues
  */
 export async function getVenues() {
     const message = {

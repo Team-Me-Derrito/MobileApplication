@@ -1,6 +1,5 @@
 //API
 export const BASE_URL = 'http://45.63.26.83:8001/api';
-export const API_KEY = 'api_key';
 
 //Account entity
 export const ACCOUNT_ID = 'account_id';

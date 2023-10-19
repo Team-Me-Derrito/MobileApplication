@@ -87,15 +87,14 @@ const EditProfileScreen = ({navigation}) => {
     var interestsKeysCurrent = [];
     var interestsPairsCurrent = [];
     interestTypes.forEach((interest) => {
-      if (interest.value in usersInterests) {
-        interestsKeysCurrent.append(interest.key);
-        interestsPairsCurrent.append(interest);
+      if (usersInterests.includes(interest.value)) {
+        interestsKeysCurrent.push(interest.key);
+        interestsPairsCurrent.push(interest);
       }
     });
 
     setInterestTypesSelected(interestsKeysCurrent);
     setDefaultInterestTypesOption(interestsPairsCurrent);
-    console.log(`Default interest types: ${interestsPairsCurrent}`);
   }
 
   /**
@@ -169,8 +168,6 @@ const EditProfileScreen = ({navigation}) => {
    * When the account creation is successful, it navigates to the homepage.
    */
   async function handleUpdate() {
-    console.log(`Gender: ${genderSelected}`);
-    console.log(`Interests: ${interestTypesSelected}`);
     if (validateInputs()) {
       const response = await updateAccount(communitySelected,
       name, 
@@ -179,11 +176,9 @@ const EditProfileScreen = ({navigation}) => {
       genderSelected, 
       number, 
       email); 
-
-      console.log(JSON.stringify(response));
   
       if (response.success) {
-        navigation.navigate('Homepage');
+        navigation.navigate('Profile');
       }
     } 
 };
@@ -336,6 +331,7 @@ const styles = StyleSheet.create({
   dateInput: {
     flex: 1,
     padding: 10,
+    marginTop: 20,
   },
   dateIcon: {
     padding: 10,
