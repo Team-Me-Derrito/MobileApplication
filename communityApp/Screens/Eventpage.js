@@ -89,10 +89,6 @@ function handleJoin(navigation, ticketed, setTicketed, eventID, eventName, descr
  * @param {string} token authentication token of users session
  * @param {string} event_id event_id of the opened event
  */
-async function handleDelete(account_id, token, event_id) {
-  console.log("Deleting account " + account_id, "token " + token, "event_id " + event_id)
-  await deleteEvent(account_id, token, event_id);
-}
 
 export default function Eventpage({ navigation, route }) {
   //Getting data passed through route and setting states
@@ -101,6 +97,12 @@ export default function Eventpage({ navigation, route }) {
   const [ticketed, setTicketed] = useState(false);
   const [account_id, setAccount] = useState("");
   const [token, setToken] = useState("");
+
+  async function handleDelete(account_id, token, event_id) {
+    console.log("Deleting account " + account_id, "token " + token, "event_id " + event_id)
+    await deleteEvent(account_id, token, event_id);
+    navigation.navigate('Homepage');
+  }
 
   //Asynchronously fetch data from backend and set states
   useEffect(() => {

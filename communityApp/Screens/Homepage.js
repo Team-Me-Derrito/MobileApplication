@@ -36,7 +36,7 @@ export default function Homepage({ navigation, route }) {
         if (! events.length) {
             getData();
         }
-        const refreshInterval = 15 * 1000;
+        const refreshInterval = 5 * 1000;
     
         const intervalId = setInterval(() => {
           // This will refresh in 15 seconds
