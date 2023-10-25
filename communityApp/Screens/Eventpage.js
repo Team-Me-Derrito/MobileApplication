@@ -127,6 +127,12 @@ export default function Eventpage({ navigation, route }) {
       getData();
     }
   }, []);
+
+  
+
+    const date = new Date(event.dateAndTime);
+    const options1 = { year: 'numeric', month: 'long', day: 'numeric' };
+    const options2 = { hour: '2-digit', minute: '2-digit' };
   return (
     <View style={styles.showContainer}>
       <View>
@@ -143,6 +149,17 @@ export default function Eventpage({ navigation, route }) {
             <Text style={styles.detail}>{event.description}</Text>
             <Text style={styles.bio}>Location:</Text>
             <Text style={styles.detail}>{event.venue}</Text>
+            <Text style={styles.bio}>Date & Time:</Text>
+            <Text style={styles.detail}>
+                {date.toLocaleString('en-US', options1)},
+            </Text>
+            <Text style={styles.detail}>
+                {date.toLocaleString('en-US', options2)}
+            </Text>
+            <Text style={styles.bio}>Price:</Text>
+            <Text style={styles.detail}>
+                Free
+            </Text>
             <View style={styles.buttonContainer}>
               <BlackButton onPress={() => handleJoin(navigation, ticketed, setTicketed, id, event.eventName, event.description, event.dateAndTime)} text={ticketed ? "Already Joined" : "Join"} borderRadius={2} />
               {(account_id && event && account_id == event.creator_id) ? 
